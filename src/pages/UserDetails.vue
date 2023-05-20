@@ -77,7 +77,7 @@
 </template>
 
 <script lang="ts">
-import { auth } from "../api/auth/SupabaseAuth";
+import { EAuth } from "@edifiles/services";
 import { defineComponent, ref } from 'vue';
 import { UserAttributes } from "@supabase/supabase-js";
 let user: any
@@ -95,7 +95,7 @@ export default defineComponent({
             user,
             notEditable: ref(true),
             userValues,
-            auth,
+            EAuth,
             loading: false,
             error: "",
             alert: false

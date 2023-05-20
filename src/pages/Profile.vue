@@ -56,10 +56,11 @@
 <script lang="ts">
 import Collection from "./Collection.vue";
 import UserDetails from "./UserDetails.vue";
-import { auth } from "edifiles/src/api/auth/SupabaseAuth";
+import { EAuth } from "@edifiles/services";
 import { defineComponent } from "vue";
 
-let userInfo = auth.startSession();
+let auth = new EAuth()
+let userInfo = auth.getUser();
 let userString: any;
 let initial: any;
 export default defineComponent({

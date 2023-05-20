@@ -1,5 +1,5 @@
 {
-  "name": "edifiles",
+  "name": "ui",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,8 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@edifiles/services": "^1.0.7",
     "@quasar/extras": "^1.16.2",
+    "@supabase/supabase-js": "^2.22.0",
     "global": "^4.4.0",
+    "pinia": "^2.1.3",
     "quasar": "^2.11.10",
     "typescript": "^5.0.4",
     "vue": "^3.2.47",
@@ -20,6 +23,6 @@
     "@quasar/vite-plugin": "^1.3.0",
     "@vitejs/plugin-vue": "^4.1.0",
     "sass": "1.32.12",
-    "vite": "^4.3.0"
+    "vite": "^4.3.8"
   }
 }
