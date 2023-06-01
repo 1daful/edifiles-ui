@@ -1,25 +1,33 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 export class Api {
-    resource = {
-        request: {
-            url: ""
-        },
-        response(data) {
-            return {};
-        }
-    };
+    constructor() {
+        this.resource = {
+            request: {
+                url: ""
+            },
+            response(data) {
+                return {};
+            }
+        };
+    }
 }
 class gooBoks {
-    baseUrl = '';
-    data;
-    volumeRes = new Resource(this, "", {}, (data) => ({
-        title: data.title
-    }));
+    constructor() {
+        this.baseUrl = '';
+        this.volumeRes = new Resource(this, "", {}, (data) => ({
+            title: data.title
+        }));
+    }
 }
 class Resource {
-    api;
-    type;
-    request;
-    response;
     constructor(api, type, request, response) {
         this.api = api;
         this.type = type;
@@ -31,13 +39,15 @@ class Resource {
         Object.assign(this, props);
         this.api.resources.push(this);
     }
-    async getUrl() {
-        try {
-            return this.api.baseUrl + this.request.baseUrl;
-        }
-        catch (err) {
-            console.log(err);
-        }
+    getUrl() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return this.api.baseUrl + this.request.baseUrl;
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
     }
     getBaseParams() {
         try {
@@ -85,9 +95,9 @@ class Resource {
 }
 class Response {
     constructor(props = {}) {
+        this.data = {};
         Object.assign(this, props);
     }
-    data = {};
 }
 class Axios {
     get() {
@@ -99,8 +109,4 @@ export class Request {
         this.baseUrl = url;
         this.params = params;
     }
-    name;
-    baseUrl;
-    params;
-    data;
 }

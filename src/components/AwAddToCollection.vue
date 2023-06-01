@@ -45,12 +45,13 @@
   </q-card>
 </template>
 <script setup lang="ts">
-import { auth } from "../../edifiles/src/api/auth/SupabaseAuth";
-import { Repository } from "../../edifiles/src/model/Repository";
+import { EAuth } from "@edifiles/services";
+import { Repository } from "@edifiles/services";
 import { DataType } from "../utils/types";
 //import { Collection } from "edifiles/src/utility/Types";
 import { computed, ref } from "vue";
 
+const auth = new EAuth()
 const props = defineProps({
   item: {
     type: Object as () => DataType,
@@ -66,7 +67,7 @@ let icon = computed(() => {
 //let dialogShown = false;
 let collections: Record<string, any>[];
 let collectionName = "";
-const user = auth.startSession();
+const user = auth.getUser();
 const repository = new Repository();
 
 async function addToCollection(item: any, name: string) {

@@ -87,13 +87,14 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { auth } from "../../edifiles/src/api/auth/SupabaseAuth";
+import { EAuth } from "@edifiles/services";
 //import { FirebaseAuth } from "../api/auth/FirebaseAuth";
-import { Axiosi } from "../../edifiles/src/api/Axiosi";
+import { Axiosi } from "@edifiles/services";
 import config from "../../public/config.json";
 //import Userfront, {SignupForm} from "@userfront/vue"
 
 let client = new Axiosi();
+const auth = new EAuth()
 
 let socials = config.socials;
 //let auth = new FirebaseAuth()
@@ -239,8 +240,6 @@ export default defineComponent({
         })*/
     this.onload();
     //this.auth.startUI()
-    const sess = this.auth.startSession();
-    console.log("sess: ", sess);
   },
 });
 </script>

@@ -1,4 +1,4 @@
-import { View, Layout } from './types';
+import { View} from './types';
 import { defineStore } from 'pinia';
 
 export const useDialog = defineStore({

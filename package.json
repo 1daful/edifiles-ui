@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@edifiles/services": "^1.0.7",
+    "@edifiles/services": "^1.1.1",
     "@quasar/extras": "^1.16.2",
     "@supabase/supabase-js": "^2.22.0",
     "global": "^4.4.0",

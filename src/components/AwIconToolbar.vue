@@ -5,14 +5,14 @@
   </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { action } from "../utils/types";
+import { Action } from "../utils/types";
 
 export default defineComponent({
     name: "AwIconToolbar",
     props: {
         actions: {
             required: true,
-            type:  Array as () => action[]
+            type:  Array as () => Action[]
         }
     }
 })

@@ -101,19 +101,20 @@
 
 <script lang="ts">
 import config from "../../public/config.json";
-import { auth } from "../api/auth/SupabaseAuth";
+import { EAuth } from "@edifiles/services";
 //import ProgressBar from "../components/ProgressBar.vue";
-import { Mailer } from "../api/Email/Mailer";
+import { Mailer } from "@edifiles/services";
 //import { MediaApi } from "../api/MediaApi";
 //import { SupabaseRepo } from "../model/SupabaseRepo";
 import { defineComponent, ref } from "vue";
 //import { ListMonk } from '../api/Email/Listmonk';
-import { EmailAddress, EmailType } from "../utility/Types";
+import { EmailAddress, EmailType } from "@edifiles/services";
 //import zxcvbn from 'zxcvbn';
 //let firebase = new FirebaseSetUp();
 
 //const api = new ListMonk()
 //let mediaApi = new MediaApi(api);
+const auth = new EAuth()
 let site = config;
 let emailAddress: EmailAddress;
 let emailType: EmailType;
@@ -271,7 +272,7 @@ export default defineComponent({
               attachments: [],
               inline_images: [],
             };
-            this.mailer.sendEmail(emailAddress, emailType);
+            this.mailer.sendEmail(emailType);
           }
           this.signUp = false;
           this.verified = true;

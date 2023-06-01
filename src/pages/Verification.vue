@@ -22,12 +22,13 @@
 </template>
 
 <script lang="ts">
-import { auth } from "../api/auth/SupabaseAuth";
+import { EAuth } from "@edifiles/services";
 import { defineComponent } from 'vue'
-import { Utility } from "../Utility";
+import { Utility } from "@edifiles/services";
 import { useQuasar } from "quasar";
 
 const utility = new Utility()
+const auth = new EAuth()
 
 export default defineComponent({
     data() {

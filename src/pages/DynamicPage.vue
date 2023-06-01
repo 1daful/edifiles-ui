@@ -4,7 +4,7 @@
   <AwView :view="view" v-if="view"></AwView>
 </template>
 <script setup lang="ts">
-import { action, DataType, Layout, View } from "../utils/types";
+import { Action, DataType, Layout, View } from "../utils/types";
 import AwList from "../components/AwList.vue";
 import AwIconToolbar from "../components/AwIconToolbar.vue";
 import AwView from "../components/AwView.vue";
@@ -15,7 +15,7 @@ const props = defineProps({
     required: true,
   },
   actions: {
-    type: Array as () => action[],
+    type: Array as () => Action[],
   },
   layouts: {
     type: Array as () => Layout[],

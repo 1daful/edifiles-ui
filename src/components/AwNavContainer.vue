@@ -35,10 +35,7 @@
         <q-toolbar class="text-h5 text-weight-bolder justify-between">
           <q-item-label v-if="brand" class="logo"> {{ brand }}</q-item-label>
           <template v-for="data in dataList" :key="data.path">
-            <!--<QItemSection v-if="data.meta?.icon">-->
             <QAvatar :icon="data.meta.icon" v-if="data.meta?.icon"></QAvatar>
-            <!--</QItemSection>-->
-            <!--<QItemSection>-->
             <RouterLink
               class="q-ma-sm"
               :to="{
@@ -51,7 +48,6 @@
             >
               {{ data.name }}
             </RouterLink>
-            <!--</QItemSection>-->
           </template>
           <slot name="nav"></slot>
           <q-btn
@@ -115,8 +111,10 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { getRoute } from "../utils/RoutesUtil";
+import { EAuth } from '@edifiles/services';
 
-let userInfo;
+const auth = new EAuth()
+let userInfo = auth.getUser();
 const leftDrawerOpen = ref(false);
 const emit = defineEmits([]);
 const props = defineProps({

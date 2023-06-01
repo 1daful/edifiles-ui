@@ -33,11 +33,12 @@ const { file, addFile, removeFile } = useFileList()
 
 // Uploader
 //import createUploader from '../vue-dd-uploader/src/compositions/file-uploader'
-import { SupabaseStore } from "../api/SupabaseStore";
-import { auth } from "../api/auth/SupabaseAuth";
+import { EdiStorage } from "@edifiles/services";
+import { EAuth } from "@edifiles/services";
 import { defineComponent } from 'vue'
 
-const store = new SupabaseStore()
+const store = new EdiStorage()
+const auth = new EAuth
 
 export default defineComponent({
 	name: 'SingleMediaPage',
@@ -68,7 +69,7 @@ export default defineComponent({
 			this.loading = true
 
 			// change status to indicate the success of the upload request
-			const user = this.auth.startSession()
+			const user = this.auth.getUser()
 			const path = "public/" + user?.user_metadata.name
 				const {data, error} = await store.upload("avatar", path, this.file.file)
 				if (data) {this.file.status = true}

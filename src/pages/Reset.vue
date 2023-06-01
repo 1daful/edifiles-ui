@@ -28,9 +28,10 @@
 </template>
 
 <script lang="ts">
-import { auth } from "../api/auth/SupabaseAuth";
+import { EAuth } from "@edifiles/services";
 import { defineComponent, ref } from "vue";
 
+const auth = new EAuth()
 //let user = {}
 let token: URL
 export default defineComponent({

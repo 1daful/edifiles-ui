@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Utility } from "../Utility";
+import { Utility } from "@edifiles/services";
 
 const utility = new Utility()
 

@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { Search } from "../../edifiles/src/Search/Search";
+import { Search } from "@edifiles/services";
 //import { mount } from 'mount-vue-component';
 //import AwIconToolbar from "../components/AwIconToolbar.vue";
 import { DataType } from "../utils/types";

@@ -4,9 +4,9 @@
 </template>
 
 <script setup lang="ts">
-import { Axiosi } from "edifiles/src/api/Axiosi";
-import { Repository } from "edifiles/src/model/Repository";
-import { ListMonk } from "edifiles/src/api/Email/Listmonk";
+import { Axiosi } from "@edifiles/services";
+import { Repository } from "@edifiles/services";
+import { Mailer } from "@edifiles/services";
 import { ref } from "vue";
 
 const email = ref("");

@@ -1,8 +1,8 @@
 <template>
-    <div class="text-h4 q-mb-md q-pa-md row media item-start q-gutter-md" :key="this.type">
+    <div class="text-h4 q-mb-md q-pa-md row media item-start q-gutter-md" :key="type">
         <template v-if="mediaItems.length > 0">
             <q-card class="col-2 myCard" v-for="mediaItem in mediaItems" :key="mediaItem.id">
-                        <q-img :src="mediaItem[this.type].thumbnaillarge" spinner-color="white" style="height: 15em;">
+                        <q-img :src="mediaItem[type].thumbnaillarge" spinner-color="white" style="height: 15em;">
                             <template v-slot:error>
                                 <div class="absolute-full flex flex-center bg-negative text-white">
                                 <q-icon name="error" /> Cannot load image
@@ -11,12 +11,12 @@
                         </q-img>
                     <q-card-section>
                     <q-icon
-                            v-if="mediaItem[this.type].icon==='library_add_checked'" class="absolute float z-top"
+                            v-if="mediaItem[type].icon==='library_add_checked'" class="absolute float z-top"
                             color="white"
-                            :name="mediaItem[this.type].icon"
+                            :name="mediaItem[type].icon"
                             size="25px">
                         </q-icon>
-                        <q-btn fab-mini color="primary" v-if="mediaItem[this.type].icon==='library_add_checked'" class="absolute innerfloat"></q-btn>
+                        <q-btn fab-mini color="primary" v-if="mediaItem[type].icon==='library_add_checked'" class="absolute innerfloat"></q-btn>
                         <q-btn
                         v-else
                         fab-mini
@@ -28,17 +28,17 @@
                         @click="addToCollection(mediaItem)"
                         />
                       <router-link :to="{name: 'Media',
-                      params: {id: mediaItem[this.type].id},
+                      params: {id: mediaItem[type].id},
                       query: {mediaType: 'type'}
                       }">
-                          <p class="text-weight-bold" style="font-size: 16px">{{mediaItem[this.type].title}}</p>
-                          <q-item-label class="caption text-subtitle1">{{mediaItem[this.type].description?.slice(0, 110)}} <span v-if="mediaItem[this.type].description?.length > 180">...</span></q-item-label>
+                          <p class="text-weight-bold" style="font-size: 16px">{{mediaItem[type].title}}</p>
+                          <q-item-label class="caption text-subtitle1">{{mediaItem[type].description?.slice(0, 110)}} <span v-if="mediaItem[type].description?.length > 180">...</span></q-item-label>
                               
                       </router-link>
                     </q-card-section>
                     <q-card-actions v-if="mediaItem.quotes.inserted">
                         <q-icon left name="schedule" class="text-weight-bold" size="19px" /> 
-                        <span> {{mediaItem[this.type].inserted}}</span>
+                        <span> {{mediaItem[type].inserted}}</span>
                     </q-card-actions>
             </q-card>
         </template>
@@ -48,19 +48,20 @@
 
 <script lang="ts">
 
-import { Recommender } from "../api/Recommender";
+import { Recommender } from "@edifiles/services";
 import { defineComponent } from "vue";
-import { Axiosi } from "../api/Axiosi";
-import { auth } from "../api/auth/SupabaseAuth";
-import { Repository } from "../model/Repository";
-import { CollectionType, MediaType } from "../Types";
+import { Axiosi } from "@edifiles/services";
+import { EAuth } from "@edifiles/services";
+import { Repository } from "@edifiles/services";
+import { CollectionType, MediaType } from "@edifiles/services";
 
 let recommender = new Recommender()
 let mediaItems: any = []
 let type: any
 let client = new Axiosi()
 //const repository = new Repository("collections")
-const user = auth.startSession()
+const auth = new EAuth()
+const user = auth.getUser()
 
 export default defineComponent({
     name: 'Media',

@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 // import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../pages/Home.vue'
-import { authGuard } from "../../edifiles/src/api/auth/authGuard";
+import { authGuard } from "../utils/AuthGuard";
 
 
 export function Router( /* { store, ssrContext } */

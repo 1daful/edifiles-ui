@@ -4,11 +4,11 @@
 import { useRouter } from 'vue-router';
 import { QDialog } from 'quasar';
 
-import { Repository } from "../../edifiles/src/model/Repository";
-import { Search } from "../../edifiles/src/Search/Search";
+import { Repository } from "@edifiles/services";
+import { Search } from "@edifiles/services";
 import { Action, Layout, View } from "../utils/types";
 import { Component, createApp, defineComponent } from 'vue';
-import { FilterType } from 'edifiles/src/utility/Types';
+import { FilterType } from '@edifiles/services';
 
 const AwDialog: Component = {
   components: {
@@ -53,10 +53,9 @@ const j = defineComponent({
 
 })
 const mount = () => {
-  createApp().
 }
 
-const actions: action[] = [
+const actions: Action[] = [
   {
     label: "",
     event: "filter",
@@ -164,7 +163,7 @@ const actions: action[] = [
   },
 ];
 
-const action: action = {
+const action: Action = {
   label: "",
   event: search.toString(),
   name: "",

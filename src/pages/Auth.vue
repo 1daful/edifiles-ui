@@ -3,10 +3,11 @@
 </template>
 
 <script lang="ts">
-import { auth } from "../api/auth/SupabaseAuth";
+import { EAuth } from "@edifiles/services";
 import { defineComponent } from "vue";
 import { useQuasar } from "quasar";
 
+const auth = new EAuth()
 export default defineComponent({
     name: 'Auth',
     data() {

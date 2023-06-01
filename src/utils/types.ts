@@ -1,8 +1,11 @@
 import { Component } from "vue"
 import { RouteLocation } from "vue-router"
+import { Utility } from '@edifiles/services';
+
+const util = new Utility()
 
 export type DataType = {
-    id: any,
+    id?: any,
     img?: string,
     icon?: string,
     overlay?: string,
@@ -75,9 +78,28 @@ export type Layout = {
     heading?: string,
     id?: any,
     type: LayoutType,
+    sections?: DataType[] | View[] | Component[],
     data?: DataType[],
     views?: View[],
     components?: Component[], //View name or object
     size: number,
-    postion?: {y: number, x: number}
+    postion?: {y: number, x: number},
+    viewport?: string
 }
+
+export type DataGroup = {
+    name: string,
+    data: DataType[] | DataSource[]
+}
+
+export type DataSource = {
+    sections: DataGroup[],
+    view: 'x-tabbed' | 'section' | 'y-tabbed'
+}
+
+export function isSection(obj: Layout): boolean {
+    if(util.isType<DataType>(obj.sections)) {
+        return true
+    };
+    return true
+  }

@@ -67,7 +67,7 @@
     <q-dialog v-model="alert" no-backdrop-dismiss>
         <q-card style="min-width: 350px;">
             <q-card-section>
-                <div> {{this.error}} </div>
+                <div> {{error}} </div>
             </q-card-section>
             <q-card-actions>
                 <q-btn flat label="OK" color="primary" v-close-popup />
@@ -79,9 +79,10 @@
 <script lang="ts">
 import { EAuth } from "@edifiles/services";
 import { defineComponent, ref } from 'vue';
-import { UserAttributes } from "@supabase/supabase-js";
+
+const auth = new EAuth()
 let user: any
-let userValues: UserAttributes = {
+let userValues = {
     email: "",
     password: "",
     data: {}
@@ -98,7 +99,8 @@ export default defineComponent({
             EAuth,
             loading: false,
             error: "",
-            alert: false
+            alert: false,
+            auth
         }
     },
     mounted() {

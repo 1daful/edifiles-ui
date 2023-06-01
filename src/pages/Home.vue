@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, inject, nextTick, onMounted, ref } from "vue";
+import { nextTick, onMounted } from "vue";
 import AwNavContainer from "../components/AwNavContainer.vue";
 import Btn from "../components/Buton.vue";
 import AwView from "../components/AwView.vue";
@@ -27,7 +27,6 @@ import AwAction from "../components/AwAction.vue";
 import AwHorizontal from "../components/AwHorizontal.vue";
 import AwFilters from "../components/AwFilters.vue";
 import { DataType, Filters, Layout, View } from "../utils/types";
-import Hello from "../components/HelloWorld.vue";
 import { useDialog } from "../utils/useDialog";
 //import { mount } from "mount-vue-component";
 

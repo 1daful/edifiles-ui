@@ -27,11 +27,11 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { Repository} from "../model/Repository";
-import { Media } from "../model/Media";
+import { Repository} from "@edifiles/services";
+//import { Media } from "../model/Media";
 
 let repository = new Repository("collections");
-let mediaItems: Array<any> = Media
+//let mediaItems: Array<any> = Media
 
 export default defineComponent({
     name: 'Collection',
@@ -41,7 +41,7 @@ export default defineComponent({
             link: ref('quotes'),
             repository,
             shown: true,
-            mediaItems,
+            //mediaItems,
             
       tab: ref('mails'),
       splitterModel: ref(20)

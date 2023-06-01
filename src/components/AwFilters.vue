@@ -33,8 +33,8 @@
 
 <script setup lang="ts">
 import { Filters, Action } from "../utils/types";
-import { Filter, FilterCheck, FilterRange } from "../../edifiles/src/utility/Types";
-import { Search } from "../../edifiles/src/Search/Search";
+import { Filter, FilterCheck, FilterRange } from '@edifiles/services';
+import { Search } from '@edifiles/services';
 import { onMounted, ref } from "vue";
 
 //let select: string[];
@@ -66,7 +66,7 @@ const filter = () => {
   };
   const search = new Search();
   console.log("filters ", filters);
-  //const result = search.search(props.data.index, props.query, filters);
+  const result = search.search(props.data.index, props.query, filters);
   //emit(defaultAction.event, result);
 };
 

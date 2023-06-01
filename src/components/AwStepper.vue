@@ -67,7 +67,7 @@
 </template>
 <script lang="ts">
 import { QuestionType } from "../utils/types";
-import { Repository } from "../../edifiles/src/model/Repository";
+import { Repository } from "@edifiles/services";
 const repository = new Repository();
 
 export default {
