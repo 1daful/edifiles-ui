@@ -86,7 +86,6 @@ export function Router( /* { store, ssrContext } */
                 }
               ]
             },
-      
             {
               path: '/upload',
               name: 'Upload',
@@ -110,6 +109,11 @@ export function Router( /* { store, ssrContext } */
             {
               path: '/:catchAll(.*)*',
               component: () => import('../pages/ErrorNotFound.vue'),
+            },
+            {
+              path: '/:name',
+              component: () => import('../pages/DataPages'),
+              props: (route) => ({ name: route.query.name })
             }
           ],
         },

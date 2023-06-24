@@ -9,7 +9,7 @@
       :query="query"
       :data="filterData"
     ></AwView>
-    <AwDataView :data="data" layout="Grid"></AwDataView>
+    <EDataView :data="data" layout="Grid"></EDataView>
     <div ref="mef">
       <QBtn to="signin"> Sign in</QBtn>
     </div>
@@ -22,12 +22,12 @@ import { nextTick, onMounted } from "vue";
 import AwNavContainer from "../components/AwNavContainer.vue";
 import Btn from "../components/Buton.vue";
 import AwView from "../components/AwView.vue";
-import AwDataView from "../components/AwDataView.vue";
+import EDataView from "../components/EDataView.vue";
 import AwAction from "../components/AwAction.vue";
 import AwHorizontal from "../components/AwHorizontal.vue";
 import AwFilters from "../components/AwFilters.vue";
 import { DataType, Filters, Layout, View } from "../utils/types";
-import { useDialog } from "../utils/useDialog";
+import { useWidgets } from "../utils/useWidgets";
 //import { mount } from "mount-vue-component";
 
 const query = "Hello there";
@@ -60,7 +60,7 @@ const params = {
   },
 };
 
-const viewa = useDialog();
+const viewa = useWidgets();
 const data: DataType = {
   //icon: "schedule",
   img: "../../public/hero_sunset.jpeg",
@@ -129,8 +129,8 @@ name: "Home";
 //navList: this.$route.matched[0].children,
 onMounted(() => {
   nextTick(() => {});
-  viewa.insert("home", view);
+  viewa.insert("SidebarLeft", view);
   //view.layouts.push(layou);
-  console.log("STORE ", viewa.views);
+  console.log("STORE ", viewa.widgets);
 });
 </script>

@@ -1,18 +1,16 @@
 <template>
   <div class="row">
     <div
-      v-for="layout in view.layouts"
-      :key="layout.id"
-      :class="`col-lg-${layout.size} ${layout.viewport}`"
+      :key="view.id"
+      :class="`col-lg-${view.size} ${view.viewport}`"
     >
-      <h4 v-if="layout.heading">{{ layout.heading }}</h4>
+      <h4 v-if="view.heading">{{ view.heading }}</h4>
       <Component
-        :is="component"
-        v-for="component in layout.components"
-        v-bind="$attrs"
+        :is="component.content"
+        v-for="component in view.components" v-bind="{...component.props, ...$attrs }"
       ></Component>
-      <AwDataView v-for="data in layout.data" :data="data"></AwDataView>
-      <AwView v-for="view in layout.views" :view="view"></AwView>
+      <AwDataView v-for="data in view.data" :data="data"></AwDataView>
+      <AwView v-for="childView in view.views" :view="childView"></AwView>
     </div>
   </div>
 </template>
@@ -34,6 +32,9 @@ export default defineComponent({
       required: true,
       type: String,
     },*/
+    dynamicProps: {
+      type: null
+    }
   },
   mounted() {
     console.log("Attrs: ", this.$attrs);

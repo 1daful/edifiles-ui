@@ -1,7 +1,7 @@
 <template>
   <div class="row jstify-start" v-if="props.vertical">
     <div class="col-3 header-link" v-show="dataList">
-      <!--<QList>
+      <QList>
         <QItem v-for="data in dataList" :key="data.path">
           <QItemSection v-if="data.meta?.icon">
             <QAvatar :icon="data.meta.icon"></QAvatar>
@@ -20,7 +20,7 @@
           </QItemSection>
         </QItem>
         <slot name="nav"></slot>
-      </QList>-->
+      </QList>
     </div>
     <div class="col">
       <RouterView :key="$route.fullPath"></RouterView>

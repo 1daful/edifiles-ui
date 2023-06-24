@@ -1,5 +1,4 @@
 import { Component } from "vue"
-import { RouteLocation } from "vue-router"
 import { Utility } from '@edifiles/services';
 
 const util = new Utility()
@@ -65,41 +64,74 @@ export type Filters = {
     }[]
 }
 
-export type NavLink = RouteLocation & {icon?: string}
+
+export type WidgetName = 'Header' | 'SidebarLeft' | 'SidebarRight' | 'Footer' | 'Main'
+
+export type NavLink = {
+    icon?: string,
+    path: string,
+    params?: any,
+    query?: any
+}
 
 export type LayoutType = 'Grid' | 'List' | 'Horizontal'
 
-export type View = {
-    name?: string,
-    layouts: Layout[]
+export type VComponent = Component & {
+    content: Component,
+    props?: any
 }
+export interface IView {
+    heading?: string
+    id?: any
+    type: LayoutType
+    sections?: DataType[] | View[] | Component[]
+    data?: DataType[]
+    views?: View[]
+    components?: Component[] //View name or object
+    size: number
+    postion?: {y: number, x: number}
+    viewport?: string
 
-export type Layout = {
-    heading?: string,
-    id?: any,
-    type: LayoutType,
-    sections?: DataType[] | View[] | Component[],
-    data?: DataType[],
-    views?: View[],
-    components?: Component[], //View name or object
-    size: number,
-    postion?: {y: number, x: number},
+}
+export class View implements IView {
+    constructor(view: IView) {
+        Object.assign(this, view);
+    }
+    push(...content: DataType[] | View[] | VComponent[]){
+        if(util.isType<VComponent>(content)) {
+            this.components?.push(content)
+        }
+        else if(util.isType<DataType>(content)) {
+            this.data?.push(content)
+        }
+        if(util.isType<View>(content)) {
+            this.views?.push(content)
+        }
+    }
+    heading?: string
+    id?: any
+    type!: LayoutType
+    sections?: DataType[] | View[] | Component[]
+    data?: DataType[]
+    views?: View[]
+    components?: VComponent[] //View name or object
+    size!: number
+    postion?: {y: number, x: number}
     viewport?: string
 }
 
-export type DataGroup = {
-    name: string,
-    data: DataType[] | DataSource[]
-}
-
 export type DataSource = {
-    sections: DataGroup[],
-    view: 'x-tabbed' | 'section' | 'y-tabbed'
+    name: string,
+    content: DataType[] | DataSource[],
+    data?: DataType
+    sections?: DataSource[],
+    navType: 'x-nav' | 'x-section' | 'y-nav' | 'y-section'
 }
 
-export function isSection(obj: Layout): boolean {
-    if(util.isType<DataType>(obj.sections)) {
+export function isType<T>(obj:any): boolean {
+    if(util.isType<T>(obj)){
         return true
-    };
-    return true
+    }
+    return false
   }
+  
