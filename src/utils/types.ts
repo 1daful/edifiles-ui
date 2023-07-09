@@ -82,12 +82,10 @@ export type VComponent = Component & {
 }
 export interface IView {
     heading?: string
-    id?: any
-    type: LayoutType
-    sections?: DataType[] | View[] | Component[]
-    data?: DataType[]
-    views?: View[]
-    components?: Component[] //View name or object
+    id: any
+    layout: LayoutType
+    navType: NavType
+    sections?: DataType[] | QuestionType[] | View[] | VComponent[]
     size: number
     postion?: {y: number, x: number}
     viewport?: string
@@ -97,36 +95,30 @@ export class View implements IView {
     constructor(view: IView) {
         Object.assign(this, view);
     }
-    push(...content: DataType[] | View[] | VComponent[]){
-        if(util.isType<VComponent>(content)) {
-            this.components?.push(content)
-        }
-        else if(util.isType<DataType>(content)) {
-            this.data?.push(content)
-        }
-        if(util.isType<View>(content)) {
-            this.views?.push(content)
-        }
+    insert(...content: DataType[] | QuestionType[] | View[] | VComponent[]){
+        this.sections?.push(content)
     }
     heading?: string
-    id?: any
-    type!: LayoutType
-    sections?: DataType[] | View[] | Component[]
-    data?: DataType[]
-    views?: View[]
-    components?: VComponent[] //View name or object
+    id: any
+    layout!: LayoutType
+    navType!: NavType
+    sections?: DataType[] | QuestionType[] | View[] | VComponent[]
     size!: number
     postion?: {y: number, x: number}
     viewport?: string
 }
 
+export type NavType = 'x-nav' | 'x-section' | 'y-nav' | 'y-section'
+
 export type DataSource = {
     name: string,
     content: DataType[] | DataSource[],
-    data?: DataType
+    data?: DataType,
     sections?: DataSource[],
-    navType: 'x-nav' | 'x-section' | 'y-nav' | 'y-section'
+    navType: NavType
 }
+
+export type Recommendation = 'popular' | 'latest' | 'recommended' | 'related'
 
 export function isType<T>(obj:any): boolean {
     if(util.isType<T>(obj)){

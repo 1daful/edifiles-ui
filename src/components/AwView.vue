@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import AwDataView from "../components/AwDataView.vue";
+import AwDataView from "../components/EDataView.vue";
 import { View } from "../utils/types";
 import { defineComponent } from "vue";
 

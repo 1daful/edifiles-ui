@@ -10,11 +10,12 @@
     </div>
     <RouterView></RouterView>
 </template>
-
+7
 <script lang="ts">
 import { DataSource, DataType, NavLink, VComponent, View } from '../utils/types';
 import { config } from "../../edifiles.config";
 import { Utility } from '@edifiles/services';
+//import {  } from "../utils/useData";
 import { useWidgets } from "../utils/useWidgets";
 import VSection from "../components/ESection.vue";
 import ENav from "../components/ENav.vue";
@@ -73,9 +74,12 @@ export default defineComponent({
         }
     },
     props: {
-        section: {
-            type: Object as () => DataSource,
-            required: true,
+        propSection: {
+            type: Object as () => DataSource
+        },
+        name: {
+            type: String,
+            required: true
         }
     },
     methods: {
@@ -122,15 +126,13 @@ export default defineComponent({
             const data: DataType[] = []
             return data
         },
-        getDataSource(name: string){
-            config.template.dataviews.forEach(dataView => {
-                dataView.datasouces.forEach(datasource => {
-                    if (datasource.name = name) {
-                        return datasource
-                    }
-                })
-            })
-            return
+    },
+    mounted() {
+        if(this.propSection) {
+            this.section = this.propSection
+        }
+        else {
+            this.section = this.getDataSource(this.name)
         }
     }
 })

@@ -13,7 +13,9 @@ export class Widget extends View {
     //views?: View[]
 }
 let f: IView = {
-    type: 'Horizontal',
+    id: undefined,
+    layout: 'Horizontal',
+    navType: 'x-nav',
     size: 12
 }
 export const useWidgets = defineStore({
@@ -25,21 +27,27 @@ export const useWidgets = defineStore({
                 'Header',
             //content: [],
             {
-                type: 'Grid',
+                id: 'Header',
+                navType: 'x-nav',
+                layout: 'Grid',
                 size: 1,
             }
         ),
         new Widget(
             'Footer',
         {
-            type: 'Grid',
+            id: 'Footer',
+            navType: 'x-nav',
+            layout: 'Grid',
             size: 1,
             //content: [],
         }),
         new Widget(
             'SidebarLeft',
         {
-            type: 'List',
+            id: 'SidebarLeft',
+            navType: 'y-nav',
+            layout: 'List',
             size: 1,
             //content: [],
             //views: [],
@@ -47,13 +55,17 @@ export const useWidgets = defineStore({
         new Widget(
             'SidebarRight',
         {
-            type: 'Grid',
+            id: 'SidebarRight',
+            navType: 'y-nav',
+            layout: 'Grid',
             size: 1,
             //content: [],
             //views: [],
         }),
         new Widget('Main', {
-            type: 'Grid',
+            id: 'Main',
+            navType: 'x-nav',
+            layout: 'Grid',
             size: 12
         })
 ] as Widget[]
@@ -61,7 +73,9 @@ export const useWidgets = defineStore({
     actions: {
         get(name: WidgetName){
             let widget = new View ({
-                type: 'Horizontal',
+                id: '',
+                navType: 'x-section',
+                layout: 'Horizontal',
                 size: 0
             })
             this.widgets.forEach(widget => {
@@ -71,12 +85,10 @@ export const useWidgets = defineStore({
             })
             return widget
         },
-        insert(name: WidgetName, component?: VComponent, data?: DataType, view?: View) {
+        insert(name: WidgetName, content?: DataType[] | View[] | VComponent[]) {
             this.widgets.forEach(widget => {
                 if(widget.name === name) {
-                    if(component) widget.components?.push(component)
-                    else if(data) widget.data?.push(data)
-                    else if(view) widget.views?.push(view)
+                    if(content) widget.sections?.push(content)
                 }
             });
         },
@@ -86,13 +98,8 @@ export const useWidgets = defineStore({
 
                 }
             })
-        },
-        triggerEvent() {
-            // ... event trigger logic ...
-            this.$onAction('myEvent', payload => {
-              // Handle the event
-              console.log('Event triggered:', payload);
-            });
-          },
+        }
     }
 })
+
+export { WidgetName };
