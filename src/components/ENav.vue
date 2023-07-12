@@ -1,5 +1,5 @@
 <template>
-  <div class="row jstify-start" v-if="props.vertical">
+  <div class="row jstify-start" v-if="props.orientation === 'y-nav'">
     <div class="col-3 header-link" v-show="props.dataList">
       <QList>
         <QItem v-for="data in dataList" :key="data.path">
@@ -29,11 +29,9 @@ import { NavLink } from "../utils/types";
 import { onBeforeUnmount, onMounted } from "vue";
 
 const props = defineProps({
-  horizontal: {
-    type: Boolean,
-  },
-  vertical: {
-    type: Boolean,
+  orientation: {
+    type: String as () => 'x-nav' | 'y-nav',
+    required: true
   },
   dataList: {
     type: Array as () => NavLink[],

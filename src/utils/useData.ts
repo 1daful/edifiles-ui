@@ -1,5 +1,5 @@
 import { Recommender } from "@edifiles/services";
-import { DataSource, DataType, Recommendation } from "./types";
+import { DataType, Recommendation } from "./types";
 import { config } from "../../edifiles.config";
 import mitt from "mitt";
 import { defineStore } from "pinia";

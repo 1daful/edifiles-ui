@@ -71,7 +71,8 @@ export type NavLink = {
     icon?: string,
     path: string,
     params?: any,
-    query?: any
+    query?: any,
+    children?: NavLink[]
 }
 
 export type LayoutType = 'Grid' | 'List' | 'Horizontal'
@@ -84,38 +85,42 @@ export interface IView {
     heading?: string
     id: any
     layout: LayoutType
+    sections?: ViewSection[]
     navType: NavType
-    sections?: DataType[] | QuestionType[] | View[] | VComponent[]
     size: number
     postion?: {y: number, x: number}
     viewport?: string
-
+    getState?: () => {}
+    prep?: Function
 }
+
+export type ViewSection = View | DataType |QuestionType[] | VComponent
+
 export class View implements IView {
     constructor(view: IView) {
         Object.assign(this, view);
     }
-    insert(...content: DataType[] | QuestionType[] | View[] | VComponent[]){
-        this.sections?.push(content)
+    insert(...content: ViewSection[]){
+        this.sections?.push(...content)
     }
     heading?: string
     id: any
     layout!: LayoutType
+    sections?: ViewSection[]
     navType!: NavType
-    sections?: DataType[] | QuestionType[] | View[] | VComponent[]
     size!: number
     postion?: {y: number, x: number}
     viewport?: string
+    state?: any
+    prep?: () => {}
 }
 
 export type NavType = 'x-nav' | 'x-section' | 'y-nav' | 'y-section'
 
-export type DataSource = {
+export type DataSection = {
+navType: string;
     name: string,
-    content: DataType[] | DataSource[],
-    data?: DataType,
-    sections?: DataSource[],
-    navType: NavType
+    content: DataType[] | DataSection[],
 }
 
 export type Recommendation = 'popular' | 'latest' | 'recommended' | 'related'
@@ -126,4 +131,3 @@ export function isType<T>(obj:any): boolean {
     }
     return false
   }
-  

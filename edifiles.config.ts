@@ -1,44 +1,77 @@
-import { Repository } from '@edifiles/services';
-import { DataSource } from "./src/utils/types";
-import { getRecommendations } from "./src/utils/useData";
+import { Repository, Recommender, EAuth } from '@edifiles/services';
+import { ViewSection } from "./src/utils/types";
 import { View } from "./src/utils/types";
 import { WidgetName, useWidgets } from "./src/utils/useWidgets";
-import Search from "../components/ESearch.vue";
+import Search from "../ui/src/components/ESearch.vue";
 
 const repo = new Repository()
-const Header = useWidgets().get('Header')
-const search: View = new View({
+const recom = new Recommender()
+const auth = new EAuth()
+
+const search: ViewSection = new View({
     id: 'search',
     layout: 'Grid',
     navType: 'x-nav',
     size: 12,
-    sections: {
+    sections: [{
         content: Search
-    }
+    }]
 })
-useWidgets().widgets
 
-function setGlobal(parent: WidgetName, ...views: any[]) {
-    useWidgets().get(parent).insert(views)
+
+const Global: Record<WidgetName, ViewSection[]> = {
+    Header: [
+        search,
+    ],
+    Footer: [],
+    Main: [],
+    SidebarLeft: [],
+    SidebarRight: []
+}
+
+const setGlobal = () => {
+    Object.keys(Global).forEach((key) => {
+        const widgetKey = key as WidgetName;
+        useWidgets().get(widgetKey).insert(...Global[widgetKey])
+      });
 }
 
 function register(viewId: string, ...actions: string[]) {
     
 }
 
-const header = Header.insert(search)
-//const product = repo.readItems('product')
-const products: DataSource = await getRecommendations('latest', 'x-nav') || {
-    name: '',
-    content: [],
-    navType: 'x-nav'
-}
+const MusicView: View = new View({
+    id: 'musicView',
+    layout: 'Grid',
+    navType: 'x-section',
+    size: 12,
+    getState() {
+      return this.id;
+    },
+    async prep(prepOptions: Record<string, any>) {
+        const latest = await recom.getLatest(this.id, prepOptions.category)
+        const popular = await recom.getPopular(this.id, prepOptions.category)
+        const user = await auth.getUser()
+        let recommended
+        if(user) {
+            recommended = await recom.getRecommended(this.id, user.id, prepOptions.category)
+        }
+        return {
+            latest,
+            popular,
+            user,
+            recommended
+        }
+    }
+})
+
 export const config = {
     template: {
-        dataviews: [{
-            datasouces: [products],
-            views: ['Home']
-        }],
+        views: [
+            MusicView
+        ],
+        xlinks: [],
+        ylinks: [],
         style: {
             background: {},
             foreground: {},

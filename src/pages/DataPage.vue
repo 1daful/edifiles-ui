@@ -1,18 +1,22 @@
 <template>
-    <div v-for="sect in section.sections">
-        <RouterLink v-if="util.isType<DataSource>(sect) && (section.navType === 'x-nav' || section.navType === 'y-nav')" :to="{
-            path: sect.name,
-            params:{name: sect.name},
-            query: {section: JSON.stringify(sect)}
-        }"></RouterLink>
-        <EDataView :data="sect" v-else-if="util.isType<DataType>(sect)"></EDataView>
-        <DataPage :section="sect" v-if="util.isType<DataSource>(sect) && (section.navType === 'x-section' || section.navType === 'y-section')"></DataPage>
+    <div v-for="section in view.sections">
+        <template v-if="view.navType === 'x-section' || view.navType === 'y-section'">
+        <EView v-if="util.isType<View>(section)" :view="view"></EView>
+            <!--<ENav v-if="section.navType === 'x-nav' || section.navType === 'y-nav'"
+            :orientation="section.navType"
+            :dataList="[{
+                path: section.name,
+                params:{name: section.name},
+                query: {section: JSON.stringify(section)},
+            }]"></ENav>-->
+        <EDataView :data="section" v-else-if="util.isType<DataType>(section)"></EDataView>
+        <EDataView :questions="section" v-else-if="util.isType<QuestionType[]>(section)"></EDataView>
     </div>
     <RouterView></RouterView>
 </template>
-7
+
 <script lang="ts">
-import { DataSource, DataType, NavLink, VComponent, View } from '../utils/types';
+import { QuestionType, DataType, NavLink, VComponent, View } from '../utils/types';
 import { config } from "../../edifiles.config";
 import { Utility } from '@edifiles/services';
 //import {  } from "../utils/useData";
@@ -20,62 +24,25 @@ import { useWidgets } from "../utils/useWidgets";
 import VSection from "../components/ESection.vue";
 import ENav from "../components/ENav.vue";
 import EDataView from "../components/EDataView.vue";
+import EView from "../components/EView.vue";
 
 import { defineComponent } from 'vue';
 
-let section: DataSource
+let view: View
 const util = new Utility()
 const SidebarLeft = useWidgets().get("SidebarLeft")
 const Main = useWidgets().get("Main")
-const VNavComp = {
-    content: ENav,
-    props: {
-        dataList: []
-    }
-}
-let VSectionComp: VComponent = {
-    content:VSection,
-    props: {
-        section: {}
-    }
-}
-let sectionView = new View({
-    type: "Grid",
-    size: 0,
-    components: [VSectionComp]
-})
-const xNav = new View({
-    type: "Horizontal",
-    size: 12
-})
-
-const yNav = new View({
-    type: "Grid",
-    size: 12
-})
-
-let view: View = new View({
-    type: "Grid",
-    size: 3
-})
-
-const views: View[] = [
-    SidebarLeft,
-    Main
-];
 
 export default defineComponent({
     data() {
         return {
             util,
-            SidebarLeft,
-            Main,
-            section
+            view
         }
     },
     props: {
         propSection: {
-            type: Object as () => DataSource
+            type: Object as () => View
         },
         name: {
             type: String,
@@ -83,71 +50,48 @@ export default defineComponent({
         }
     },
     methods: {
-        getDataS(datasource?: DataSource) {
-            config.template.dataviews.forEach(dataView => {
-                dataView.datasouces.forEach(datasource => {
-                    datasource.content.forEach(section => {
-                        if(util.isType<DataSource>(section)) {
-                            if(section.navType === 'x-section' || section.navType === 'y-section') {
-                                //sections.push(section)
-                                let sectionComp: VComponent = {
-                                    content: VSection,
-                                    props: section
-                                }
-                                Main.push(sectionComp)
-                            }
-                            else if(section.navType === 'y-nav') {
-                                //sections.push(section)
-                                const link: NavLink = {
-                                    path: section.name,
-                                    params: {name: section.name}
-                                }
-                                VNavComp.props.dataList.push(link)
-                                SidebarLeft.push(VNavComp)
-                                //useWidgets().insert('SidebarLeft', VNav)
-                                /**
-                                 * OR
-                                 * sidebar.push(VNav)
-                                 */
-                            }
-                            else if (section.navType === 'x-nav') {
-                                const link: NavLink = {
-                                    path: section.name,
-                                    params: {name: section.name}
-                                }
-                                VNavComp.props.dataList.push(link)
-                                Main.push(VNavComp)
-                            }
-                            return sections
+        getView(id: string) {
+            return config.template.views.find(view => {
+                view.id === id
+            });
+        },
+        createMenus() {
+            config.template.views.forEach(view => {
+                view.sections?.forEach(section => {
+                    let xlink: NavLink = {
+                        path: ''
+                    }
+                    let ylink: NavLink = {
+                        path: ''
+                    }
+
+                    if(util.isType<View>(section) && view.navType === 'x-nav') {
+                        xlink = {
+                            path: '/datapage',
+                            params: {id: section.id},
+                            query: {id: section.id}
                         }
-                });
+                        config.template.xlinks.push(xlink) 
+                    }
+                    else if (util.isType<View>(section) && view.navType === 'y-nav') {
+                        ylink = {
+                            path: '/datapage',
+                            params: {id: section.id},
+                            query: {id: section.id}
+                        }
+                        config.template.ylinks.push(ylink)
+                    }
                 });
             });
-            const data: DataType[] = []
-            return data
-        },
+        }
     },
     mounted() {
         if(this.propSection) {
-            this.section = this.propSection
+            this.view = this.propSection
         }
         else {
-            this.section = this.getDataSource(this.name)
+            this.view = this.getView(this.name) || new View({id: '', layout: 'Grid', navType: 'x-nav', size: 12})
         }
     }
 })
-
-function getData(g: DataSource) {
-    let links = []
-    let dat: any[] = []
-    g.sections.forEach(section => {
-        if(util.isType<DataSource>(section.data)) {
-            links.push(section.data.name)
-        }
-        else if(util.isType<DataType>(section.data)) {
-            dat.push()
-        }
-    });
-    return dat
-}
 </script>
