@@ -1,41 +1,22 @@
 <template>
   <span>Credit Balance: </span>
   <span>{{ balance }}</span>
-  <AwView :view="view"></AwView>
+  <EView :view="view"></EView>
 </template>
 
 <script setup lang="ts">
 import { QBtn } from "quasar";
-import AwView from "../components/AwView.vue";
+import EView from "../components/EView.vue";
 import { Action, View } from "../utils/types";
-const view: View = {
-  layouts: [
-    {
-      heading: "Payment Methods",
-      type: "List",
-      data: payments,
-      size: 2
-    },
-    {
-      type: "List",
-      components: [QBtn],
-      size: 2
-    },
-    {
-      heading: "Your Projects",
-      type: "List",
-      data: projects,
-      size: 2
-    },
-    {
-      heading: "Billing Info",
-      type: "List",
-      data: billings,
-      size: 2
-    },
-  ],
-};
+const view: View = new View({
+  id: 'billing',
+  layout: 'Grid',
+  sections: [],
+  navType: 'x-section',
+  size: 6
+});
 
+const balance = 15
 const tools: Action[] = [
   {
     label: "New Project",

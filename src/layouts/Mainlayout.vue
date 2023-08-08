@@ -1,5 +1,5 @@
 <template>
-  <AwNavContainer
+  <!--<ENavMenus
     brand="My App"
     routeName="MainLayout"
     ref="mainHeader"
@@ -7,18 +7,26 @@
     :heroStyle="heroStyle"
   >
     <template #nav>
-      <AwSearch></AwSearch>
+      <ESearch></ESearch>
     </template>
-  </AwNavContainer>
+  </ENavMenus>-->
+  <ENav navType="y-tab" :menuList="menus">
+  </ENav>
+  <RouterView :key="useRoute().fullPath"></RouterView>
 </template>
 <script setup lang="ts">
 import { useQuasar } from "quasar";
-import { onBeforeMount, onMounted, provide, ref } from "vue";
-import AwNavContainer from "../components/AwNavContainer.vue";
-import AwSearch from "../components/AwSearch.vue";
+import { onBeforeMount, ref } from "vue";
+import ENavMenus from "../components/ENavMenus.vue";
+import ESearch from "../components/ESearch.vue";
+import ENav from "../components/ENav.vue";
 import { useRoute, useRouter } from "vue-router";
-import config from "../../public/config.json";
-const hero = config.hero;
+import { config } from "../../edifiles.config";
+import config2 from "../../public/config.json";
+import { View } from "../utils/types";
+import { menus } from "../utils/menus";
+
+const hero = config2.hero;
 const $q = useQuasar();
 const mainHeader = ref(null);
 const bgImg = "../public/hero_blue.jpeg";
@@ -47,7 +55,6 @@ console.log($q.dark.mode); // "auto", true, false
 
 // toggle
 $q.dark.toggle();
-provide("mainHeader", "mainHeader");
 
 onBeforeMount(() => {
   if (useRoute().path !== "/") {

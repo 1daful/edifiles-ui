@@ -1,33 +1,29 @@
 <template>
-  <QLayout>
+  <!--<QLayout>
     <AwNavContainer routeName="Home" :routeParams="params" ref="bay"></AwNavContainer>
     <AwFilters :data="filterData" :query="query"></AwFilters>
-    <AwView
-      :view="view"
-      :hello="pr.hello"
-      actionName="filters"
-      :query="query"
-      :data="filterData"
-    ></AwView>
     <EDataView :data="data" layout="Grid"></EDataView>
     <div ref="mef">
       <QBtn to="signin"> Sign in</QBtn>
     </div>
     <AwHorizontal :dataList="[data, data, data, data]" layout="Grid"></AwHorizontal>
-  </QLayout>
+  </QLayout>-->
+  <EView :view="SBL"></EView>
+  <EView
+    :view="view"
+    :hello="pr.hello"
+    actionName="filters"
+    :query="query"
+    :data="filterData">
+  </EView>
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted } from "vue";
-import AwNavContainer from "../components/AwNavContainer.vue";
-import Btn from "../components/Buton.vue";
-import AwView from "../components/AwView.vue";
-import EDataView from "../components/EDataView.vue";
-import AwAction from "../components/AwAction.vue";
-import AwHorizontal from "../components/AwHorizontal.vue";
-import AwFilters from "../components/AwFilters.vue";
-import { DataType, Filters, Layout, View } from "../utils/types";
+import { nextTick, onBeforeMount } from "vue";
+import EView from "../components/EView.vue";
+import { DataType, Filters, View, QuestionType } from "../utils/types";
 import { useWidgets } from "../utils/useWidgets";
+import { Utility } from '@edifiles/services';
 //import { mount } from "mount-vue-component";
 
 const query = "Hello there";
@@ -52,6 +48,8 @@ const filterData: Filters = {
     },
   ],
 };
+
+const util = new Utility()
 
 const pr = { hello: "Hello Btn" };
 const params = {
@@ -81,8 +79,8 @@ const data: DataType = {
     },
     {
       name: "Read",
-      type: "Create",
-      label: "Create",
+      type: "Read",
+      label: "Read",
       icon: "bluetooth",
       event: "",
     },
@@ -97,40 +95,22 @@ const data: DataType = {
     },
   ],
 };*/
-const layouts: Layout[] = [
-  /*{
-    type: "List",
-    view: view2,
-  },*/
-  {
-    type: "List",
-    id: "leftBar",
-    components: [AwFilters],
-    size: 3,
-    viewport: "gt-sm",
-  },
-  {
-    type: "List",
-    id: "rightBar",
-    size: 6,
-    data: [data],
-  },
-  {
-    type: "List",
-    components: [AwAction],
-    size: 3,
-  },
-];
-const view: View = {
-  layouts,
-};
+const view = new View({
+  id: 'home',
+  layout: "Grid",
+  navType: "x-section",
+  size: 6,
+  sections: [data],
+});
 
-name: "Home";
+let SBL = viewa.get('Header')
+
 //navList: this.$route.matched[0].children,
-onMounted(() => {
-  nextTick(() => {});
-  viewa.insert("SidebarLeft", view);
-  //view.layouts.push(layou);
-  console.log("STORE ", viewa.widgets);
+onBeforeMount(() => {
+  //nextTick(() => {});
+  viewa.insert("Header", view);
+  console.log('SBL', SBL?.sections[0])
+  console.log('DATATYPE', util.isType<string>(SBL?.sections[0]))
+  console.log('TYPE', SBL?.sections[0] instanceof QuestionType)
 });
 </script>

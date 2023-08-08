@@ -1,4 +1,4 @@
-import { VComponent, View, DataType, IView, WidgetName } from './types';
+import { View, ViewSection, IView, WidgetName } from './types';
 import { defineStore } from 'pinia';
 
 export class Widget extends View {
@@ -12,43 +12,41 @@ export class Widget extends View {
     //components?: Component[],
     //views?: View[]
 }
-let f: IView = {
-    id: undefined,
-    layout: 'Horizontal',
-    navType: 'x-nav',
-    size: 12
-}
+
 export const useWidgets = defineStore({
     id: 'refState',
     state: () => ({
-        refs: [] as String[],
+        refs: [] as any[],
         widgets: [
             new Widget(
                 'Header',
             //content: [],
             {
                 id: 'Header',
-                navType: 'x-nav',
+                navType: 'x-tab',
                 layout: 'Grid',
                 size: 1,
+                sections: []
             }
         ),
         new Widget(
             'Footer',
         {
             id: 'Footer',
-            navType: 'x-nav',
+            navType: 'x-tab',
             layout: 'Grid',
             size: 1,
+            sections: []
             //content: [],
         }),
         new Widget(
             'SidebarLeft',
         {
             id: 'SidebarLeft',
-            navType: 'y-nav',
-            layout: 'List',
+            navType: 'y-tab',
+            layout: 'Grid',
             size: 1,
+            sections: []
             //content: [],
             //views: [],
         }),
@@ -56,42 +54,45 @@ export const useWidgets = defineStore({
             'SidebarRight',
         {
             id: 'SidebarRight',
-            navType: 'y-nav',
+            navType: 'y-tab',
             layout: 'Grid',
             size: 1,
+            sections: []
             //content: [],
             //views: [],
         }),
         new Widget('Main', {
             id: 'Main',
-            navType: 'x-nav',
+            navType: 'x-tab',
             layout: 'Grid',
-            size: 12
+            size: 12,
+            sections: []
         })
 ] as Widget[]
     }),
     actions: {
-        get(name: WidgetName){
-            let widget = new View ({
-                id: '',
-                navType: 'x-section',
-                layout: 'Horizontal',
-                size: 0
-            })
-            this.widgets.forEach(widget => {
-                if(widget.name === name) {
-                    return widget
-                }
-            })
-            return widget
+        addRef(ref: any) {
+            this.refs.push(ref)
         },
-        insert(name: WidgetName, content?: DataType[] | View[] | VComponent[]) {
+        get(name: WidgetName) {
+            for (const widget of this.widgets) {
+                if (widget.name === name) {
+                    return widget;
+                }
+            }
+            
+        },
+        insert(name: WidgetName, ...content: ViewSection[]) {
             this.widgets.forEach(widget => {
-                if(widget.name === name) {
-                    if(content) widget.sections?.push(content)
+                if (widget.name === name) {
+                    widget.sections.push(...content);
+                    console.log('DONE', ...content);
+                    console.log('WIDGET', widget);
                 }
             });
         },
+        
+
         alter(name: WidgetName, props: []) {
             this.widgets.forEach(widget => {
                 if(widget.name === name) {

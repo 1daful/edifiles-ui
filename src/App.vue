@@ -1,16 +1,24 @@
 <template>
   <router-view :key="r.fullPath"></router-view>
 </template>
+
 <script setup lang="ts">
 import { useQuasar } from "quasar";
-import { provide, ref } from "vue";
+import { onMounted, provide, ref } from "vue";
 import { useRoute } from "vue-router";
+import { Client, cacheExchange,fetchExchange, provideClient } from '@urql/vue';
+
+const client = new Client({
+  url: 'http://your-graphql-api-endpoint', // Replace with your actual GraphQL endpoint.
+  exchanges: [cacheExchange, fetchExchange],
+});
+provideClient(client)
+
 const $q = useQuasar();
 const r = useRoute();
 const mainHeader = ref(null);
 // set status
 $q.dark.set(true); // or false or "auto"
-
 // get status
 console.log($q.dark.isActive); // true, false
 
@@ -20,6 +28,8 @@ console.log($q.dark.mode); // "auto", true, false
 // toggle
 $q.dark.toggle();
 provide("mainHeader", "mainHeader");
+onMounted(() => {
+});
 </script>
 
 <style scoped>

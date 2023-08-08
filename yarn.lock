@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@0no-co/graphql.web@^1.0.1":
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/@0no-co/graphql.web/-/graphql.web-1.0.4.tgz"
+  integrity sha512-W3ezhHGfO0MS1PtGloaTpg0PbaT8aZSmmaerL7idtU5F7oCI+uu25k+MsMS31BVFlp4aMkHSrNRxiD72IlK8TA==
+
 "@babel/parser@^7.20.15", "@babel/parser@^7.21.3":
   version "7.21.8"
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.21.8.tgz"
@@ -102,6 +107,22 @@
   integrity sha512-NbsqiNX9CnEfC1Z0Vf4mE1SgAJ07JnRYcNex7AJ9zAVzmiGHmjKFEk7O4TJIsgv2B1sLEb6owKFZrACwdYngsQ==
   dependencies:
     "@types/node" "*"
+
+"@urql/core@^4.0.0":
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/@urql/core/-/core-4.1.1.tgz"
+  integrity sha512-iIoAy6BY+BUZZ7KIpnMT7C9q+ULf5ZCVxGe3/i7WZSJBrQa2h1QkIMhL+8fAKmOn9gt83jSIv5drWWnhZ9izEA==
+  dependencies:
+    "@0no-co/graphql.web" "^1.0.1"
+    wonka "^6.3.2"
+
+"@urql/vue@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@urql/vue/-/vue-1.1.2.tgz"
+  integrity sha512-ixfV0PTXcOl4KrZK24X+9B4rX9KSxqq1xhHZ0SOkAxgxMkomjJhtUl+9PuRL+LEzGWVr91OCEo68VPQ8uc5rBA==
+  dependencies:
+    "@urql/core" "^4.0.0"
+    wonka "^6.3.2"
 
 "@vitejs/plugin-vue@^2.0.0 || ^3.0.0 || ^4.0.0", "@vitejs/plugin-vue@^4.1.0":
   version "4.1.0"
@@ -365,6 +386,11 @@ global@^4.4.0:
     min-document "^2.19.0"
     process "^0.11.10"
 
+"graphql@^14.0.0 || ^15.0.0 || ^16.0.0", graphql@^16.7.1:
+  version "16.7.1"
+  resolved "https://registry.npmjs.org/graphql/-/graphql-16.7.1.tgz"
+  integrity sha512-DRYR9tf+UGU0KOsMcKAlXeFfX89UiiIZ0dRU3mR0yJfu6OjZqUcp68NnFLnqQU5RexygFoDy1EW+ccOYcPfmHg==
+
 is-binary-path@~2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/is-binary-path/-/is-binary-path-2.1.0.tgz"
@@ -572,7 +598,7 @@ vue-router@^4.2.0:
   dependencies:
     "@vue/devtools-api" "^6.5.0"
 
-"vue@^2.6.14 || ^3.3.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.2.0, vue@^3.2.25, vue@^3.2.47, vue@3.3.4:
+"vue@^2.6.14 || ^3.3.0", "vue@^2.7.0 || ^3.0.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.2.0, vue@^3.2.25, vue@^3.2.47, vue@3.3.4:
   version "3.3.4"
   resolved "https://registry.npmjs.org/vue/-/vue-3.3.4.tgz"
   integrity sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==
@@ -607,6 +633,11 @@ whatwg-url@^5.0.0:
   dependencies:
     tr46 "~0.0.3"
     webidl-conversions "^3.0.0"
+
+wonka@^6.3.2:
+  version "6.3.3"
+  resolved "https://registry.npmjs.org/wonka/-/wonka-6.3.3.tgz"
+  integrity sha512-id4wYGsT6aEc8/3+by7NTHvTe0DwsOjv7vah0K0+AorV1MHKuS3OQ2g8DGsem1OEXrNShbVLPsg4kG2O6GZ2SQ==
 
 yaeti@^0.0.6:
   version "0.0.6"

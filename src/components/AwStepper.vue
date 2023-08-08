@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <q-stepper v-model="step" ref="stepper" color="primary" animated>
       <q-step
-        v-for="question in questions"
+        v-for="question in questions.content"
         :name="question.number"
         :title="question.title"
         :icon="question.icon"
@@ -48,9 +48,9 @@
       <template v-slot:navigation>
         <q-stepper-navigation>
           <q-btn
-            @click="step === questions.length ? submit() : $refs.stepper.next()"
+            @click="step === questions.content.length ? submit() : $refs.stepper.next()"
             color="primary"
-            :label="step === questions.length ? 'Finish' : 'Continue'"
+            :label="step === questions.content.length ? 'Finish' : 'Continue'"
           />
           <q-btn
             v-if="step > 1"
@@ -66,7 +66,7 @@
   </div>
 </template>
 <script lang="ts">
-import { QuestionType } from "../utils/types";
+import { QuestionForm } from "../utils/types";
 import { Repository } from "@edifiles/services";
 const repository = new Repository();
 
@@ -79,7 +79,7 @@ export default {
   },
   props: {
     questions: {
-      type: Array as () => QuestionType[],
+      type: Object as () => QuestionForm,
       required: true,
     },
     dynamicComponent: {
@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     submit() {
-      this.repository.addItems("Questions", this.questions);
+      this.repository.addItems(this.questions.name, this.questions.content);
     },
   },
 };

@@ -1,6 +1,8 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 // import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../pages/Home.vue'
+import List from "../pages/List.vue";
+import Single from "../pages/Single.vue";
 import { authGuard } from "../utils/AuthGuard";
 
 
@@ -111,9 +113,14 @@ export function Router( /* { store, ssrContext } */
               component: () => import('../pages/ErrorNotFound.vue'),
             },
             {
-              path: '/:name',
-              component: () => import('../pages/DataPages'),
-              props: (route) => ({ name: route.query.name })
+              path: '/:type/:categories*/:id(\\d+|\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})',
+              component: Single,
+              //props: (route) => ({ id: route.query.id })
+            },
+            {
+              path: '/:type/:categories*',
+              component: List,
+              //props: (route) => ({ id: route.query.id })
             }
           ],
         },

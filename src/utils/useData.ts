@@ -1,5 +1,5 @@
 import { Recommender } from "@edifiles/services";
-import { DataType, Recommendation } from "./types";
+import { DataType, Recommendation, View } from "./types";
 import { config } from "../../edifiles.config";
 import mitt from "mitt";
 import { defineStore } from "pinia";
@@ -8,7 +8,7 @@ import { useWidgets } from "./useWidgets";
 const emitter = mitt()
 const Main = useWidgets().get('Main')
 
-export const useSeervice = defineStore({
+export const useService = defineStore({
     id: "useData",
     state: () => ({
         services: config.template.services,
@@ -30,7 +30,7 @@ export const useSeervice = defineStore({
         getService(name: string) {
             return this.services[name]
         },
-        register(data: DataSource, ...actions: string[]) {
+        register(viewId: string, ...actions: Function[]) {
             
         }
     }
@@ -38,13 +38,14 @@ export const useSeervice = defineStore({
 
 const recomm = new Recommender()
 
-export const getRecommendations =  async (section: Recommendation, navType: navType, category?: string, userId?: string, itemId?: string) => {
+/*export const getRecommendations =  async (section: Recommendation, navType: navType, category?: string, userId?: string, itemId?: string) => {
     let res
-    let resSection: DataSource = {
-        name: "",
-        content: [],
-        navType: "x-nav"
-    }
+    let resSection: View = new View ({
+        id: "",
+        navType: "x-nav",
+        layout: "Grid",
+        size: 5
+    })
     switch (section) {
         case 'latest':
             let res = await recomm.getLatest(category) as unknown as DataType[]
@@ -121,4 +122,4 @@ export const addRecommendation = (name: string) => {
         }
         datasource.content.push(recom)
     });
-}
+}*/

@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { DataType, LayoutType, QuestionType } from "../utils/types";
+import { DataType, LayoutType, QuestionForm } from "../utils/types";
 import AwList from "./AwList.vue";
 import AwPanel from "./AwPanel.vue";
 import AwStepper from "./AwStepper.vue";
@@ -16,7 +16,7 @@ defineProps({
     type: Object as () => DataType,
   },
   questions: {
-    type: Array as () => QuestionType[],
+    type: Object as () => QuestionForm,
   },
   layout: {
     type: String as () => LayoutType,
