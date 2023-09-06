@@ -14,12 +14,12 @@ export function Router( /* { store, ssrContext } */
           component: () => import('../layouts/Mainlayout.vue'),
           name: "MainLayout",
           children: [
-            {
+            /*{
                 path: '/',
                 component: Home,
                 name: "Home",
                 children: [
-                    /*{
+                    {
                         path: '',
                         component: () => import ('../pages/Overview.vue'),
                         name: "Overview"
@@ -28,14 +28,14 @@ export function Router( /* { store, ssrContext } */
                         path: '/:name',
                         component: () => import ('../pages/DynamicPage.vue'),
                         name: "DynamicPage"
-                    },*/
+                    },
                     {
                         path: '/create',
                         component: () => import ('../pages/Create.vue'),
                         name: "Create",
                     }
                   ]
-            },
+            },*/
             {
               path: '/about',
               name: 'About',
@@ -112,16 +112,30 @@ export function Router( /* { store, ssrContext } */
               path: '/:catchAll(.*)*',
               component: () => import('../pages/ErrorNotFound.vue'),
             },
+            /*{
+                path: '/',
+                name: 'Home',
+                component: () => import('../pages/Page.vue'),
+                meta: {
+                  nav: true
+                }
+            },*/
             {
-              path: '/:type/:categories*/:id(\\d+|\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})',
-              component: Single,
-              //props: (route) => ({ id: route.query.id })
+              path: '/:type',
+              component: () => import('../pages/Page.vue'),
+              /*children: [
+                {*/
+                  //path: '/:type/:categories*/:id(\\d+|\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12})',
+                  //component: Single,
+                  //props: (route) => ({ id: route.query.id })
+                /*},
+                {
+                  path: '/:type/:categories*',
+                  component: List,
+                  //props: (route) => ({ id: route.query.id })
+                },
+              ]*/
             },
-            {
-              path: '/:type/:categories*',
-              component: List,
-              //props: (route) => ({ id: route.query.id })
-            }
           ],
         },
         /*{

@@ -1,18 +1,16 @@
 <template>
-  <div class="row jstify-start" v-if="props.navType === 'y-tab'">
-    <div class="col-3 header-link">
-      <QList>
-        <QItem v-for="data in menuList" :key="data.name">
-          <QItemSection v-if="data?.icon">
+  <div class="row jstify-start" v-if="navType === 'left' || navType === 'right'">
+    <div class="col-3 header-link" v-show="menuList">
+      <QList :bordered="style?.border" :dense="style?.dense" :dark="style?.dark">
+        <QItem v-for="data in menuList" :key="data.path" :dark="style?.dark" :dense="style?.dense">
+          <QItemSection v-if="data.icon">
             <QAvatar :icon="data.icon"></QAvatar>
           </QItemSection>
-          <QItemSection>
+          <QItemSection class="">
             <RouterLink
               class="text-h6 textweight-bolder"
               :to="{
                 path: data.path,
-                params: data.params,
-                query: data.query,
               }"
             >
               {{ data.name }}
@@ -24,21 +22,20 @@
     </div>
   </div>
 
-  <div v-else-if="props.navType === 'x-tab'">
-    <q-layout class="hero-header" style="min-height: 50px">
+  <div v-else>
+    <q-layout class="hero-header" :style="heroStyle" style="min-height: 50px">
       <q-header
+        :class="{ 'fixed-nav': heroStyle?.fixedNav }"
+        :style="{ backgroundColor: `${headerColor}` }"
       >
         <q-toolbar class="text-h5 text-weight-bolder justify-between">
+          <q-item-label v-if="brand" class="logo"> {{ brand }}</q-item-label>
           <template v-for="data in menuList" :key="data.path">
             <QAvatar :icon="data.icon" v-if="data.icon"></QAvatar>
             <RouterLink
               class="q-ma-sm"
               :to="{
-                name: data.name,
-                params: data.params,
-                query: {
-                  name: data.query,
-                },
+                path: data.path,
               }"
             >
               {{ data.name }}
@@ -51,16 +48,22 @@
             flat
             dense
             round
-            @click="leftDrawerOpen = !leftDrawerOpen"
+            @click="drawerOpen = !drawerOpen"
             aria-label="Menu"
             icon="menu"
             class="lt-md"
           ></q-btn>
         </q-toolbar>
       </q-header>
+      <div class="overlay" :style="{ backgroundColor: heroStyle?.backgroundColor }"></div>
+      <div class="hero-content text-white" v-if="hero">
+        <h4>{{ hero.title }}</h4>
+        <p>{{ hero.subtitle }}</p>
+        <q-btn label="{{ hero.buttonText }}" v-if="hero.buttonText"></q-btn>
+      </div>
       <q-drawer
         style="z-index: 999"
-        v-model="leftDrawerOpen"
+        v-model="drawerOpen"
         side="left"
         :width="200"
         bordered
@@ -70,7 +73,7 @@
         <q-list padding>
           <q-btn
             icon="close"
-            @click="leftDrawerOpen = !leftDrawerOpen"
+            @click="drawerOpen = !drawerOpen"
             color="red"
           ></q-btn>
           <router-link v-for="menu in menuList" :key="menu.name" :to="menu.path">
@@ -92,16 +95,17 @@
         </q-list>
       </q-drawer>
     </q-layout>
+    <RouterView :key="useRoute().fullPath"></RouterView>
   </div>
-  </template>
+</template>
 <script setup lang="ts">
 import { TabType, NavLink } from "../utils/types";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { EAuth } from '@edifiles/services';
 import { useRoute } from "vue-router";
 
 const auth = new EAuth()
-const leftDrawerOpen = ref(false);
+const drawerOpen = ref(false);
 let userInfo = auth.getUser();
 const props = defineProps({
   navType: {
@@ -111,7 +115,29 @@ const props = defineProps({
   menuList: {
     type: Array as () => NavLink[],
     required: true
+  },
+  style: {
+    type: Object
+  },
+  heroStyle: {
+    type: Object,
+  },
+  brand: {
+    type: String,
+  },
+  hero: {
+    type: Object,
   }
+});
+
+let headerColorRef = ref("rgba(255, 0,0,0)");
+let headerColor = computed({
+  get: () => {
+    return headerColorRef.value;
+  },
+  set: (val: string) => {
+    headerColorRef.value = val;
+  },
 });
 
 </script>

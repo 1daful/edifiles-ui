@@ -23,11 +23,11 @@
 
 <script lang="ts">
 // Components
-import DropZone from '../components/DropZone.vue'
+import DropZone from '../components/Dropzone.vue'
 import FilePreview from '../components/FilePreview.vue'
 
 // File Management
-import useFileList, { UploadableFile } from '../api/file-list'
+import useFileList, { UploadableFile } from '../utils/file-list.js'
 
 const { file, addFile, removeFile } = useFileList()
 

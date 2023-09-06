@@ -8,9 +8,9 @@
     </div>
     <AwHorizontal :dataList="[data, data, data, data]" layout="Grid"></AwHorizontal>
   </QLayout>-->
-  <EView :view="SBL"></EView>
+  <EView :view="headerView" hello="hello"></EView>
   <EView
-    :view="view"
+    :view="view2"
     :hello="pr.hello"
     actionName="filters"
     :query="query"
@@ -19,11 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onBeforeMount } from "vue";
+import { nextTick, onBeforeMount, shallowRef } from "vue";
 import EView from "../components/EView.vue";
-import { DataType, Filters, View, QuestionType } from "../utils/types";
-import { useWidgets } from "../utils/useWidgets";
+import { DataType, Filters, View, NavList } from "../utils/types";
 import { Utility } from '@edifiles/services';
+import Buton from "../components/Buton.vue";
 //import { mount } from "mount-vue-component";
 
 const query = "Hello there";
@@ -58,17 +58,36 @@ const params = {
   },
 };
 
-const viewa = useWidgets();
+//const viewa = useWidgets();
 const data: DataType = {
   //icon: "schedule",
-  img: "../../public/hero_sunset.jpeg",
-  overlay: "g",
-  meta: {
-    title: "The Black Skirt",
-    description: "This is about man's fallacy and illusion that leads to infactuation.",
-    created: "27-03-34",
-    author: "Wonders Ayanfe",
-  },
+  overlay: "../../public/hero_sunset.jpeg",
+  items: [
+    {
+      content: [
+        {
+          label: "The Black Skirt",
+        },
+      ]
+    },
+    {
+      content: [
+        {
+          label: "This is about man's fallacy and illusion that leads to infactuation.",
+        }
+      ]
+    },
+    {
+      content: [
+        {
+          label: "27-03-34",
+        },
+        {
+          label: "Wonders Ayanfe"
+        }
+      ]
+    }
+  ],
   actions: [
     {
       name: "Create",
@@ -76,6 +95,8 @@ const data: DataType = {
       label: "Create",
       icon: "whatshot",
       event: "Create",
+      onResult: [],
+      onError: []
     },
     {
       name: "Read",
@@ -83,6 +104,8 @@ const data: DataType = {
       label: "Read",
       icon: "bluetooth",
       event: "",
+      onResult: [],
+      onError: []
     },
   ],
   setHeader: true,
@@ -96,21 +119,48 @@ const data: DataType = {
   ],
 };*/
 const view = new View({
+  heading: 'Welcome',
   id: 'home',
   layout: "Grid",
-  navType: "x-section",
-  size: 6,
+  navType: 'center',
+  size: 'col-8',
   sections: [data],
 });
 
-let SBL = viewa.get('Header')
+const navList: NavList = new NavList({
+  id: "first",
+  content: [
+    {
+      path: '/blog',
+      name: 'Blog',
+      params: {},
+      query: {}
+    },
+    {
+      path: '/videos',
+      name: 'Videos',
+      params: {},
+      query: {}
+    }
+  ],
+  navType: "top"
+})
+const headerView = new View({
+  id: 'header',
+  layout: 'Grid',
+  navType: 'top',
+  size: 'col-12',
+  sections: [Buton, Buton, navList]
+})
+
+const view2 = view
+
+//let SBL = viewa.get('Header')
 
 //navList: this.$route.matched[0].children,
 onBeforeMount(() => {
   //nextTick(() => {});
-  viewa.insert("Header", view);
-  console.log('SBL', SBL?.sections[0])
-  console.log('DATATYPE', util.isType<string>(SBL?.sections[0]))
-  console.log('TYPE', SBL?.sections[0] instanceof QuestionType)
+  //viewa.insert("Header", view2);
+  //console.log('SBL', SBL?.sections[0])
 });
 </script>

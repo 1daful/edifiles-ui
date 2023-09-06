@@ -1,86 +1,40 @@
 <template>
-    <div v-for="section in view.sections">
-            <ENav
-            navType="y-tab"
-            :menuList="processMenus(view).yMenus"></ENav>
-        <template v-if="isType(section, View)">
-            <template v-if="section.navType === 'x-section' || section.navType === 'y-section'">
-                <EView v-if="isType(section, View)" :view="view"></EView>
-                <EDataView :data="section" v-else-if="isType(section, DataType)"></EDataView>
-                <EDataView :questions="section" v-else-if="isType(section, QuestionForm)"></EDataView>
-            </template>
-            <ENav
-            navType="x-tab"
-            :menuList="processMenus(view).xMenus"></ENav>
-            <RouterView></RouterView>
-        </template>
-    </div>
-    <RouterView></RouterView>
+    <EView :view="view"></EView>
 </template>
 
 <script setup lang="ts">
-import { QuestionForm, DataType, View, NavLink, isType } from '../utils/types';
+import { View } from '../utils/types';
 import { viewResolver } from "../../edifiles.config";
 import { useRoute } from "vue-router";
-import ENav from "../components/ENav.vue";
-import EDataView from "../components/EDataView.vue";
 import EView from "../components/EView.vue";
 import { onMounted } from 'vue';
 
-let view: View = new View({
+let view = new View({
     id: 'listView',
     layout: 'Grid',
     sections: [],
-    navType: 'x-section',
-    size: 12
+    size: 8,
+    navType: 'center'
 })
-let id: string | number
+
 let type: string
 let categories: string[]
 
-const processMenus = (view: View) => {
-  const filteredSections = view.sections.filter(section =>
-    isType(section, View) &&
-    (section.navType === 'x-tab' || section.navType === 'y-tab')
-  ) as View[];
-
-  const extractlink = (section: View): NavLink => ({
-    path: section.id,
-    name: section.id,
-    params: {
-        type: useRoute().params.type,
-        categories: useRoute().params.categories
-    }
-  });
-
-  const xMenus: NavLink[] = filteredSections
-    .filter(section => section.navType === 'x-tab')
-    .map(extractlink);
-
-  const yMenus: NavLink[] = filteredSections
-    .filter(section => section.navType === 'y-tab')
-    .map(extractlink);
-
-  return { xMenus, yMenus };
-};
-
-    onMounted(async () => {
-        type = useRoute().params.type as string
-        categories = useRoute().params.categories as string[]
-            if (categories) {
-            await viewResolver.list(type, undefined, categories.map(category => ({
-                prop: 'category',
-                operator: 'eq',
-                value: category
-            })))
-            }
+onMounted(async () => {
+    type = useRoute().params.type as string
+    categories = useRoute().params.categories as string[]
+        if (categories) {
             view = new View({
                 id: categories ? categories[categories.length - 1] : type,
                 layout: 'Grid',
-                sections: [],
-                navType: 'x-section',
-                size: 12
+                sections: await viewResolver.list(type, undefined, categories.map(category => ({
+                    prop: 'category',
+                    operator: 'eq',
+                    value: category
+                }))),
+                navType: 'center',
             })
-        //console.log('List')
-    })
+        }
+    //console.log('List')
+})
 </script>

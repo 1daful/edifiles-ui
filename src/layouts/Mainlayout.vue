@@ -10,21 +10,18 @@
       <ESearch></ESearch>
     </template>
   </ENavMenus>-->
-  <ENav navType="y-tab" :menuList="menus">
-  </ENav>
-  <RouterView :key="useRoute().fullPath"></RouterView>
+  <EView :view="GlobalView.mainLayout"></EView>
+  <!--RouterView :key="useRoute().fullPath"></RouterView>-->
 </template>
 <script setup lang="ts">
 import { useQuasar } from "quasar";
-import { onBeforeMount, ref } from "vue";
-import ENavMenus from "../components/ENavMenus.vue";
-import ESearch from "../components/ESearch.vue";
-import ENav from "../components/ENav.vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { config } from "../../edifiles.config";
+import { config, GlobalView } from "../../edifiles.config";
 import config2 from "../../public/config.json";
+import EView from "../components/EView.vue";
+import Page from "../pages/About.vue";
 import { View } from "../utils/types";
-import { menus } from "../utils/menus";
 
 const hero = config2.hero;
 const $q = useQuasar();
@@ -57,6 +54,14 @@ console.log($q.dark.mode); // "auto", true, false
 $q.dark.toggle();
 
 onBeforeMount(() => {
+  /*GlobalView.mainLayout.children.forEach(child => {
+    useRouter().addRoute('MainLayout', {
+      path: `/${child.id}`,
+      name: `${child.id}`,
+      component: Page,
+    })
+  });*/
+
   if (useRoute().path !== "/") {
     heroStyle = {};
   }

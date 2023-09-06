@@ -2,7 +2,7 @@ import { View, ViewSection, IView, WidgetName } from './types';
 import { defineStore } from 'pinia';
 
 export class Widget extends View {
-    constructor(name: WidgetName, view: IView) {
+    constructor(name: WidgetName, view: View) {
         super(view)
         this.name = name
     }
@@ -23,9 +23,9 @@ export const useWidgets = defineStore({
             //content: [],
             {
                 id: 'Header',
-                navType: 'x-tab',
+                navType: 'top',
                 layout: 'Grid',
-                size: 1,
+                size: 12,
                 sections: []
             }
         ),
@@ -33,9 +33,9 @@ export const useWidgets = defineStore({
             'Footer',
         {
             id: 'Footer',
-            navType: 'x-tab',
+            navType: 'bottom',
             layout: 'Grid',
-            size: 1,
+            size: 12,
             sections: []
             //content: [],
         }),
@@ -43,7 +43,7 @@ export const useWidgets = defineStore({
             'SidebarLeft',
         {
             id: 'SidebarLeft',
-            navType: 'y-tab',
+            navType: 'left',
             layout: 'Grid',
             size: 1,
             sections: []
@@ -54,7 +54,7 @@ export const useWidgets = defineStore({
             'SidebarRight',
         {
             id: 'SidebarRight',
-            navType: 'y-tab',
+            navType: 'right',
             layout: 'Grid',
             size: 1,
             sections: []
@@ -63,7 +63,7 @@ export const useWidgets = defineStore({
         }),
         new Widget('Main', {
             id: 'Main',
-            navType: 'x-tab',
+            navType: 'center',
             layout: 'Grid',
             size: 12,
             sections: []

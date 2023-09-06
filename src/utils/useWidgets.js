@@ -14,35 +14,35 @@ export const useWidgets = defineStore({
         widgets: [
             new Widget('Header', {
                 id: 'Header',
-                navType: 'x-tab',
+                navType: 'top',
                 layout: 'Grid',
-                size: 1,
+                size: 12,
                 sections: []
             }),
             new Widget('Footer', {
                 id: 'Footer',
-                navType: 'x-tab',
+                navType: 'bottom',
                 layout: 'Grid',
-                size: 1,
+                size: 12,
                 sections: []
             }),
             new Widget('SidebarLeft', {
                 id: 'SidebarLeft',
-                navType: 'y-tab',
+                navType: 'left',
                 layout: 'Grid',
                 size: 1,
                 sections: []
             }),
             new Widget('SidebarRight', {
                 id: 'SidebarRight',
-                navType: 'y-tab',
+                navType: 'right',
                 layout: 'Grid',
                 size: 1,
                 sections: []
             }),
             new Widget('Main', {
                 id: 'Main',
-                navType: 'x-tab',
+                navType: 'center',
                 layout: 'Grid',
                 size: 12,
                 sections: []

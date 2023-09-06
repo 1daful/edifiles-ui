@@ -29,6 +29,13 @@ console.log($q.dark.mode); // "auto", true, false
 $q.dark.toggle();
 provide("mainHeader", "mainHeader");
 onMounted(() => {
+  /*GlobalView.mainLayout.children.forEach(child => {
+    useRouter().addRoute('MainLayout', {
+      path: `/${child.id}`,
+      name: `${child.id}`,
+      component: Page,
+    })
+  });*/
 });
 </script>
 

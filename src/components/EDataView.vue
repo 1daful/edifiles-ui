@@ -1,25 +1,22 @@
 <template>
   <div v-if="data" class="q-ma-sm">
-    <AwPanel :data="data" v-if="layout === 'Grid'"></AwPanel>
+    <AwPanel :data="data" v-if="!data.noCard"></AwPanel>
     <AwList :data="data" v-else></AwList>
   </div>
-  <AwStepper :questions="questions" v-if="questions"> </AwStepper>
+  <EStepper :form="form" v-if="form"> </EStepper>
 </template>
 
 <script lang="ts" setup>
-import { DataType, LayoutType, QuestionForm } from "../utils/types";
-import AwList from "./AwList.vue";
-import AwPanel from "./AwPanel.vue";
-import AwStepper from "./AwStepper.vue";
+import { DataType, LayoutType, FormType } from "../utils/types";
+import AwList from "./EList.vue";
+import AwPanel from "./EPanel.vue";
+import EStepper from "./EStepper.vue";
 defineProps({
   data: {
     type: Object as () => DataType,
   },
-  questions: {
-    type: Object as () => QuestionForm,
-  },
-  layout: {
-    type: String as () => LayoutType,
-  },
+  form: {
+    type: Object as () => FormType,
+  }
 });
 </script>

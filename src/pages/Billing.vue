@@ -12,7 +12,7 @@ const view: View = new View({
   id: 'billing',
   layout: 'Grid',
   sections: [],
-  navType: 'x-section',
+  navType: 'center',
   size: 6
 });
 

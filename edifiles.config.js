@@ -1,7 +1,11 @@
-import { Repository, Recommender, EAuth } from '@edifiles/services';
+import { Repository, Recommender, EAuth, Mailer } from '@edifiles/services';
+import { Action, FormType, PageView, QuestionType } from "./src/utils/types";
 import { View } from "./src/utils/types";
 import { useWidgets } from "./src/utils/useWidgets";
 import Search from "../ui/src/components/ESearch.vue";
+import { menus } from "./src/utils/menus";
+import Home from "./src/pages/Home.vue";
+import { useRouter } from 'vue-router';
 const postQuery = `
   query GetPost($postId: ID!) {
     post(id: $postId) {
@@ -18,23 +22,171 @@ const auth = new EAuth();
 const search = new View({
     id: 'search',
     layout: 'Grid',
-    navType: 'x-tab',
-    size: 12,
+    navType: 'top',
+    size: 'col-12',
     sections: [{
             content: Search
         }]
 });
-const GlobalServ = {
-    auth
+export const userSignUp = new QuestionType({
+    title: 'Sign Up',
+    index: 1,
+    content: [{
+            question: 'name',
+            inputType: 'text',
+            answer: '',
+            options: [],
+            name: '',
+            image: ''
+        }, {
+            question: 'email',
+            inputType: 'email',
+            answer: '',
+            options: [],
+            name: '',
+            image: ''
+        }, {
+            question: 'password',
+            inputType: 'password',
+            answer: '',
+            options: [],
+            name: '',
+            image: ''
+        }],
+    actions: {
+        submit: new Action({
+            label: 'Sign Up',
+            event: auth.signUp,
+            onResult: [
+                () => {
+                    new Mailer().sendEmail({
+                        name: 'Welcome New User',
+                        subject: '',
+                        text: '',
+                        templateKey: '',
+                        html: '',
+                        attachments: [],
+                        inline_images: [],
+                        headers: [],
+                        messenger: '',
+                        body: ''
+                    });
+                }
+            ],
+            onError: []
+        })
+    },
+    meta: {
+        isNew: false
+    }
+});
+export const userView = new View({
+    id: 'userView',
+    layout: 'Grid',
+    navType: 'center',
+    size: 'col-12',
+    sections: [new FormType('userForm', 'Submit', [userSignUp])]
+});
+const signIn = new Action({
+    label: 'Sign In',
+    event: () => useRouter().push('/signin'),
+    onResult: [],
+    onError: []
+});
+export const userViewResolver = () => {
+    const mailer = new Mailer();
+    const userSignUp = () => {
+        userView;
+    };
 };
-const GlobalView = {
-    Header: [
-        search,
+export const viewResolver = {
+    async main() {
+        return [
+            useWidgets().get('Header'),
+            useWidgets().get('Footer'),
+            useWidgets().get('Main'),
+            useWidgets().get('SidebarLeft'),
+            useWidgets().get('SidebarRight')
+        ];
+    },
+    async list(id, foreignTable, filters, range, limit, category) {
+        const latest = await recom.getLatest(id, category);
+        const popular = await recom.getPopular(id, category);
+        return [
+            latest,
+            popular,
+            await repo.readItems(id, foreignTable, filters, range, limit)
+        ];
+    },
+    async single(type, id, category) {
+        return [
+            await repo.readItem(type, 'id', id),
+            await recom.getRelated(type, id, category)
+        ];
+    }
+};
+const home = new PageView({
+    id: 'home',
+    layout: 'Grid',
+    sections: [Home],
+    children: []
+});
+const tools = new PageView({
+    id: 'tools',
+    layout: 'Grid',
+    sections: [
+        {
+            //overlay: "../../public/hero_sunset.jpeg",
+            items: [{
+                    content: [{
+                            label: "The Black Skirt",
+                        },
+                        {
+                            label: "This is about man's fallacy and illusion that leads to infactuation.",
+                        },
+                        {
+                            label: "27-03-34",
+                        },
+                        {
+                            label: "Wonders Ayanfe",
+                        }]
+                }],
+            actions: [
+                {
+                    name: "Create",
+                    type: "Create",
+                    label: "Create",
+                    icon: "whatshot",
+                    event: "Create",
+                    onResult: [],
+                    onError: []
+                },
+                {
+                    name: "Read",
+                    type: "Read",
+                    label: "Read",
+                    icon: "bluetooth",
+                    event: "",
+                    onResult: [],
+                    onError: []
+                },
+            ],
+        }
     ],
-    Footer: [],
-    Main: [],
-    SidebarLeft: [],
-    SidebarRight: []
+    children: []
+});
+const mainLayout = new PageView({
+    id: '',
+    layout: 'Grid',
+    sections: [
+        menus, search
+    ],
+    children: [
+        home, tools
+    ]
+});
+export const GlobalView = {
+    mainLayout
 };
 export const setGlobal = () => {
     Object.keys(GlobalView).forEach((key) => {
@@ -42,24 +194,16 @@ export const setGlobal = () => {
         useWidgets().get(widgetKey).insert(...GlobalView[widgetKey]);
     });
 };
-function register(viewId, ...actions) {
-}
-export const viewResolver = {
-    async list(id, foreignTable, filters, range, limit, category) {
-        const latest = await recom.getLatest(id, category);
-        const popular = await recom.getPopular(id, category);
-        return {
-            latest,
-            popular,
-            data: await repo.readItems(id, foreignTable, filters, range, limit)
-        };
-    },
-    async single(type, id, category) {
-        return {
-            data: await repo.readItem(type, 'id', id),
-            related: await recom.getRelated(type, id, category)
-        };
-    }
+export const view = new PageView({
+    id: '',
+    layout: 'Grid',
+    sections: []
+});
+export const globalViewResolver = {
+    main: async (params) => ({
+        menus,
+    }),
+    userView
 };
 const filters = (...filters) => {
 };

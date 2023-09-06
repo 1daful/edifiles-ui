@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import AwDataView from "../components/AwDataView.vue";
+import AwDataView from "../components/EDataView.vue";
 import { DataType } from "../utils/types";
 import { useRoute } from "vue-router";
 import { onMounted } from "vue";
