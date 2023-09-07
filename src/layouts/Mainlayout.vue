@@ -10,7 +10,9 @@
       <ESearch></ESearch>
     </template>
   </ENavMenus>-->
-  <EView :view="GlobalView.mainLayout"></EView>
+  <div class="row">
+    <EView :view="GlobalView.mainLayout"></EView>
+  </div>
   <!--RouterView :key="useRoute().fullPath"></RouterView>-->
 </template>
 <script setup lang="ts">

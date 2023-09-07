@@ -154,22 +154,31 @@ const tools: PageView = new PageView({
     sections: [
         {
           //icon: "schedule",
-          //overlay: "../../public/hero_sunset.jpeg",
+          overlay: "../../public/hero_sunset.jpeg",
+          noCard: false,
           items: [{
             content: [{
                 label: "The Black Skirt",
-            },
-            {
-                label: "This is about man's fallacy and illusion that leads to infactuation.",
-            },
-            {
-                label: "27-03-34",
-            },
-            {
-                label: "Wonders Ayanfe",
-            }]
-          }],
-          actions: [
+            }],
+        },
+        {
+            content: [
+                {
+                    label: "This is about man's fallacy and illusion that leads to infactuation.",
+                },
+            ]
+        },
+        {
+            content: [
+                {
+                    label: "27-03-34",
+                },
+                {
+                    label: "Wonders Ayanfe",
+                }
+            ]
+        }],
+        actions: [
             {
               name: "Create",
               type: "Create",

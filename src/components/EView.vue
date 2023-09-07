@@ -1,5 +1,4 @@
 <template>
-  <div class="row">
     <div :key="view.id" :class="`${view.size} ${view.viewport}`" v-if="view.layout === 'Grid'">
       <h4 v-if="view.heading">{{ view.heading }}</h4>
       <template v-for="section in view.sections">
@@ -39,7 +38,6 @@
       <!--<ETabView :widgets="view">
       </ETabView>-->
     </div>
-  </div>
 </template>
 
 <script lang="ts">

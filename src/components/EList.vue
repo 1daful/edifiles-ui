@@ -1,7 +1,7 @@
 <template>
   <q-list>
     <div class="row">
-      <div class="col-sm">
+      <div class="col">
         <EDataItem v-for="item in data.items" :dataItem="item"></EDataItem>
         <!--q-item-section v-for="(v, k) in data.meta" :key="k">
           {{ v }}

@@ -101,9 +101,7 @@ export class NavList {
     class?: string
 }
 
-export type LayoutType = 'Grid' | 'Relative'
-
-export type ScrollType = 'Vertical' | 'Horizontal'
+export type LayoutType = 'Grid' | 'Relative' | 'Vertical' | 'Horizontal'
 
 export type DataContent = {
     icon?: string;

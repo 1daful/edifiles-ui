@@ -136,20 +136,29 @@ const tools = new PageView({
     layout: 'Grid',
     sections: [
         {
-            //overlay: "../../public/hero_sunset.jpeg",
+            noCard: false,
+            overlay: "../../public/hero_sunset.jpeg",
             items: [{
                     content: [{
                             label: "The Black Skirt",
-                        },
+                        },],
+                },
+                {
+                    content: [
                         {
                             label: "This is about man's fallacy and illusion that leads to infactuation.",
                         },
+                    ]
+                },
+                {
+                    content: [
                         {
                             label: "27-03-34",
                         },
                         {
                             label: "Wonders Ayanfe",
-                        }]
+                        }
+                    ]
                 }],
             actions: [
                 {
