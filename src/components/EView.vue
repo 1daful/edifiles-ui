@@ -1,8 +1,8 @@
 <template>
     <div :key="view.id" :class="`${view.size} ${view.viewport}`" v-if="view.layout === 'Grid'">
       <h4 v-if="view.heading">{{ view.heading }}</h4>
+        <ENav :menuList="menuList" :navType="menuList[0].navType"></ENav>
       <template v-for="section in view.sections">
-        <ENav v-if="isType(section, NavList)" :menuList="section.content" :navType="section.navType"></ENav>
         <Component v-if="isVComponent(section)"
           :is="section.content"
           v-bind="{...section.props, ...$attrs }" :key="section.content.name">
@@ -43,9 +43,9 @@
 <script lang="ts">
 import EDataView from "./EDataView.vue";
 import ENav from "./ENav.vue";
-import { Layout, View, TabView, SectionView, PageView, isVComponent, isDataType, isQuestionType, isView,isComponent, isNavList, isType, NavLink, FormType, VComponent, ViewSection, SecTionType, NavList, IView } from "../utils/types";
+import { Layout, View, TabView, SectionView, PageView, isVComponent, isDataType, isQuestionType, isView,isComponent, isNavList, isType, NavLink, FormType, VComponent, ViewSection, SecTionType, NavList, IView, DataType } from "../utils/types";
 import ETabView from "./ETabView.vue";
-import { defineComponent } from "vue";
+import { Component, defineComponent } from "vue";
 
 let topMenus: NavLink[] = []
 let bottomMenus: NavLink[] = []
@@ -61,6 +61,18 @@ let review = new View({
 
 let widgets = Layout
 let navViews: View[] = []
+
+const menuList: NavList[] = []
+
+const views: IView[] = []
+
+const dataList: DataType[] = []
+
+const formList: FormType[] = []
+
+const components: Component[] = []
+
+const vComponents: VComponent[] = []
 
 export default defineComponent({
   name: "EView",
@@ -79,50 +91,15 @@ export default defineComponent({
       TabView,
       SectionView,
       PageView,
-      pageView: new PageView({
-        id: '',
-        layout: 'Grid',
-        sections: [
-          new SectionView({
-            id: 'top',
-            layout: 'Grid',
-            sections: [],
-            size: 'col-12',
-            navType: 'top'
-          }),
-          new SectionView({
-            id: 'bottom',
-            layout: 'Grid',
-            sections: [],
-            size: 'col-12',
-            navType: 'bottom'
-          }),
-          new SectionView({
-            id: 'left',
-            layout: 'Grid',
-            sections: [],
-            size: 'col-12',
-            navType: 'left'
-          }),
-          new SectionView({
-            id: 'right',
-            layout: 'Grid',
-            sections: [],
-            size: 'col-12',
-            navType: 'right'
-          }),
-          new SectionView({
-            id: 'top',
-            layout: 'Grid',
-            sections: [],
-            size: 'col-12',
-            navType: 'center'
-          }),
-        ],
-      }),
       review,
       widgets,
-      navViews
+      navViews,
+      menuList,
+      /*views,
+      dataList,
+      formList,
+      components,
+      vComponents*/
     }
   },
   components: { EDataView, ETabView, ENav },
@@ -189,9 +166,29 @@ export default defineComponent({
     }*/
   },
 
-  mounted() {
+  beforeMount() {
     //this.processView()
     this.$emit('emitted', this.navViews)
+    this.view.sections.forEach(element => {
+      if (isType(element, NavList)) {
+        this.menuList.push(element)
+      }
+      /*else if (isType(element, View || isType(element, PageView))) {
+        this.views.push(element)
+      }
+      else if (isType(element, DataType)) {
+        this.dataList.push(element)
+      }
+      else if (isType(element, FormType)) {
+        this.formList.push(element)
+      }
+      else if (isVComponent(element)) {
+        this.vComponents.push(element)
+      }
+      else if (isComponent(element)) {
+        this.components.push(element)
+      }*/
+    });
   },
 });
 </script>

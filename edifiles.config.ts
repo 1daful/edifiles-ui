@@ -35,7 +35,7 @@ const search: View = new View({
     id: 'search',
     layout: 'Grid',
     navType: 'top',
-    size: 'col-12',
+    size: 'col-4',
     sections: [{
         content: Search
     }]
@@ -148,6 +148,19 @@ const home: PageView = new PageView({
     sections: [Home],
     children: []
 })
+
+const m: NavList = new NavList({
+    id: '',
+    content: [
+        {
+            path: '/signout',
+            name: 'Log Out'
+        }
+    ],
+    navType: 'top'
+}
+)
+
 const tools: PageView = new PageView({
     id: 'tools',
     layout: 'Grid',
@@ -206,7 +219,7 @@ const mainLayout: PageView = new PageView({
     id: '',
     layout: 'Grid',
     sections: [
-        menus, search
+        menus, search, m
     ],
     children: [
         home, tools

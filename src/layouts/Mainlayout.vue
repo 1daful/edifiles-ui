@@ -13,7 +13,7 @@
   <div class="row">
     <EView :view="GlobalView.mainLayout"></EView>
   </div>
-  <!--RouterView :key="useRoute().fullPath"></RouterView>-->
+  <RouterView :key="useRoute().fullPath"></RouterView>
 </template>
 <script setup lang="ts">
 import { useQuasar } from "quasar";

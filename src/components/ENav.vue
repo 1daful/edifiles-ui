@@ -1,105 +1,42 @@
 <template>
-  <div class="row jstify-start" v-if="navType === 'left' || navType === 'right'">
-    <div class="col-3 header-link" v-show="menuList">
-      <QList :bordered="style?.border" :dense="style?.dense" :dark="style?.dark">
-        <QItem v-for="data in menuList" :key="data.path" :dark="style?.dark" :dense="style?.dense">
-          <QItemSection v-if="data.icon">
-            <QAvatar :icon="data.icon"></QAvatar>
-          </QItemSection>
-          <QItemSection class="">
-            <RouterLink
-              class="text-h6 textweight-bolder"
-              :to="{
-                path: data.path,
-              }"
-            >
-              {{ data.name }}
-            </RouterLink>
-          </QItemSection>
-        </QItem>
-        <slot name="nav"></slot>
-      </QList>
-    </div>
-  </div>
+  <template v-if="navType ==='left' || navType ==='right'">
+    <template v-for="navList in menuList">
+            <QItem v-for="data in navList.content" :key="data.path" :dark="style?.dark" :dense="style?.dense">
+              <QItemSection v-if="data.icon">
+                <QAvatar :icon="data.icon"></QAvatar>
+              </QItemSection>
+              <QItemSection class="">
+                <RouterLink
+                  class="text-h6 textweight-bolder"
+                  :to="{
+                    path: data.path,
+                  }"
+                >
+                  {{ data.name }}
+                </RouterLink>
+              </QItemSection>
+            </QItem>
+    </template>
+  </template>
 
-  <div v-else>
-    <q-layout class="hero-header" :style="heroStyle" style="min-height: 50px">
-      <q-header
-        :class="{ 'fixed-nav': heroStyle?.fixedNav }"
-        :style="{ backgroundColor: `${headerColor}` }"
-      >
-        <q-toolbar class="text-h5 text-weight-bolder justify-between">
-          <q-item-label v-if="brand" class="logo"> {{ brand }}</q-item-label>
-          <template v-for="data in menuList" :key="data.path">
-            <QAvatar :icon="data.icon" v-if="data.icon"></QAvatar>
-            <RouterLink
-              class="q-ma-sm"
-              :to="{
-                path: data.path,
-              }"
-            >
-              {{ data.name }}
-            </RouterLink>
-          </template>
-          <slot name="nav"></slot>
-          <q-btn
-            size="20px"
-            color="primary"
-            flat
-            dense
-            round
-            @click="drawerOpen = !drawerOpen"
-            aria-label="Menu"
-            icon="menu"
-            class="lt-md"
-          ></q-btn>
-        </q-toolbar>
-      </q-header>
-      <div class="overlay" :style="{ backgroundColor: heroStyle?.backgroundColor }"></div>
-      <div class="hero-content text-white" v-if="hero">
-        <h4>{{ hero.title }}</h4>
-        <p>{{ hero.subtitle }}</p>
-        <q-btn label="{{ hero.buttonText }}" v-if="hero.buttonText"></q-btn>
-      </div>
-      <q-drawer
-        style="z-index: 999"
-        v-model="drawerOpen"
-        side="left"
-        :width="200"
-        bordered
-        class="bg-grey-2 q-pa-sm"
-        :breakpoint="500"
-      >
-        <q-list padding>
-          <q-btn
-            icon="close"
-            @click="drawerOpen = !drawerOpen"
-            color="red"
-          ></q-btn>
-          <router-link v-for="menu in menuList" :key="menu.name" :to="menu.path">
-            <q-item clickable tag="a">
-              <q-item-section avatar>
-                <q-icon name="link" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ menu.name }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </router-link>
-          <div v-if="!userInfo">
-            <q-btn class="q-ma-sm" color="primary" size="12px" to="/signin"
-              >Sign in</q-btn
-            >
-            <q-btn color="primary" size="12px" to="/signup">Sign up</q-btn>
-          </div>
-        </q-list>
-      </q-drawer>
-    </q-layout>
-    <RouterView :key="useRoute().fullPath"></RouterView>
-  </div>
+  <template v-else>
+    <template v-for="navList in menuList">
+            <template v-for="data in navList.content" :key="data.path">
+              <QAvatar :icon="data.icon" v-if="data.icon"></QAvatar>
+              <RouterLink
+                class="q-ma-sm"
+                :to="{
+                  path: data.path,
+                }"
+              >
+                {{ data.name }}
+              </RouterLink>
+            </template>
+    </template>
+  </template>
 </template>
 <script setup lang="ts">
-import { TabType, NavLink } from "../utils/types";
+import { TabType, NavList } from "../utils/types";
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { EAuth } from '@edifiles/services';
 import { useRoute } from "vue-router";
@@ -113,31 +50,12 @@ const props = defineProps({
     required: true
   },
   menuList: {
-    type: Array as () => NavLink[],
+    type: Array as () => NavList[],
     required: true
   },
   style: {
     type: Object
-  },
-  heroStyle: {
-    type: Object,
-  },
-  brand: {
-    type: String,
-  },
-  hero: {
-    type: Object,
   }
-});
-
-let headerColorRef = ref("rgba(255, 0,0,0)");
-let headerColor = computed({
-  get: () => {
-    return headerColorRef.value;
-  },
-  set: (val: string) => {
-    headerColorRef.value = val;
-  },
 });
 
 </script>

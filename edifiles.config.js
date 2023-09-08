@@ -1,5 +1,5 @@
 import { Repository, Recommender, EAuth, Mailer } from '@edifiles/services';
-import { Action, FormType, PageView, QuestionType } from "./src/utils/types";
+import { Action, FormType, NavList, PageView, QuestionType } from "./src/utils/types";
 import { View } from "./src/utils/types";
 import { useWidgets } from "./src/utils/useWidgets";
 import Search from "../ui/src/components/ESearch.vue";
@@ -23,7 +23,7 @@ const search = new View({
     id: 'search',
     layout: 'Grid',
     navType: 'top',
-    size: 'col-12',
+    size: 'col-4',
     sections: [{
             content: Search
         }]
@@ -131,17 +131,27 @@ const home = new PageView({
     sections: [Home],
     children: []
 });
+const m = new NavList({
+    id: '',
+    content: [
+        {
+            path: '/signout',
+            name: 'Log Out'
+        }
+    ],
+    navType: 'top'
+});
 const tools = new PageView({
     id: 'tools',
     layout: 'Grid',
     sections: [
         {
-            noCard: false,
             overlay: "../../public/hero_sunset.jpeg",
+            noCard: false,
             items: [{
                     content: [{
                             label: "The Black Skirt",
-                        },],
+                        }],
                 },
                 {
                     content: [
@@ -188,7 +198,7 @@ const mainLayout = new PageView({
     id: '',
     layout: 'Grid',
     sections: [
-        menus, search
+        menus, search, m
     ],
     children: [
         home, tools
