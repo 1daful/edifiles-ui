@@ -11,7 +11,8 @@
     </template>
   </ENavMenus>-->
   <div class="row">
-    <EView :view="GlobalView.mainLayout"></EView>
+    <!--EView :view="GlobalView.mainLayout"></EView-->
+    <ELayout :view="view"></ELayout>
   </div>
   <RouterView :key="useRoute().fullPath"></RouterView>
 </template>
@@ -22,6 +23,7 @@ import { useRoute, useRouter } from "vue-router";
 import { config, GlobalView } from "../../edifiles.config";
 import config2 from "../../public/config.json";
 import EView from "../components/EView.vue";
+import ELayout from "../components/ELayout.vue";
 import Page from "../pages/About.vue";
 import { View } from "../utils/types";
 
@@ -43,6 +45,14 @@ let heroStyle = {
   fixedNav: true,
   headerColor: "rgba(255, 0,0,1)",
 };
+
+const view: View = new View({
+  sections: GlobalView.mainLayout.sections,
+  id: "",
+  layout: "Grid",
+  size: "",
+  navType: "top"
+})
 // set status
 $q.dark.set(true); // or false or "auto"
 

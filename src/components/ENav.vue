@@ -1,37 +1,33 @@
 <template>
   <template v-if="navType ==='left' || navType ==='right'">
-    <template v-for="navList in menuList">
-            <QItem v-for="data in navList.content" :key="data.path" :dark="style?.dark" :dense="style?.dense">
-              <QItemSection v-if="data.icon">
-                <QAvatar :icon="data.icon"></QAvatar>
-              </QItemSection>
-              <QItemSection class="">
-                <RouterLink
-                  class="text-h6 textweight-bolder"
-                  :to="{
-                    path: data.path,
-                  }"
-                >
-                  {{ data.name }}
-                </RouterLink>
-              </QItemSection>
-            </QItem>
-    </template>
+    <QItem v-for="data in menuList.content" :key="data.path" :dark="style?.dark" :dense="style?.dense">
+      <QItemSection v-if="data.icon">
+        <QAvatar :icon="data.icon"></QAvatar>
+      </QItemSection>
+      <QItemSection class="">
+        <RouterLink
+          class="text-h6 textweight-bolder"
+          :to="{
+            path: data.path,
+          }"
+        >
+          {{ data.name }}
+        </RouterLink>
+      </QItemSection>
+    </QItem>
   </template>
 
   <template v-else>
-    <template v-for="navList in menuList">
-            <template v-for="data in navList.content" :key="data.path">
-              <QAvatar :icon="data.icon" v-if="data.icon"></QAvatar>
-              <RouterLink
-                class="q-ma-sm"
-                :to="{
-                  path: data.path,
-                }"
-              >
-                {{ data.name }}
-              </RouterLink>
-            </template>
+    <template v-for="data in menuList.content" :key="data.path">
+      <QAvatar :icon="data.icon" v-if="data.icon"></QAvatar>
+      <RouterLink
+        class="q-ma-sm"
+        :to="{
+          path: data.path,
+        }"
+      >
+        {{ data.name }}
+      </RouterLink>
     </template>
   </template>
 </template>
@@ -50,7 +46,7 @@ const props = defineProps({
     required: true
   },
   menuList: {
-    type: Array as () => NavList[],
+    type: Object as () => NavList,
     required: true
   },
   style: {

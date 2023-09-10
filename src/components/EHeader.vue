@@ -1,24 +1,8 @@
 <template>
-  <div class="row jstify-start" v-if="navType === 'left' || navType === 'right'">
-    <div class="col-3 header-link" v-show="menuList">
+  <div class="row jstify-start" v-if="view.navType === 'left' || view.navType === 'right'">
+    <div class="col-3 header-link" v-show="view">
       <QList :bordered="style?.border" :dense="style?.dense" :dark="style?.dark">
-        <template v-for="navList in menuList">
-          <QItem v-for="data in navList.content" :key="data.path" :dark="style?.dark" :dense="style?.dense">
-            <QItemSection v-if="data.icon">
-              <QAvatar :icon="data.icon"></QAvatar>
-            </QItemSection>
-            <QItemSection class="">
-              <RouterLink
-                class="text-h6 textweight-bolder"
-                :to="{
-                  path: data.path,
-                }"
-              >
-                {{ data.name }}
-              </RouterLink>
-            </QItemSection>
-          </QItem>
-        </template>
+        <EView :view="view"></EView>
         <slot name="nav"></slot>
       </QList>
     </div>
@@ -67,7 +51,7 @@
           @click="drawerOpen = !drawerOpen"
           color="red"
         ></q-btn>
-        <ENav></ENav>
+        <EView :view="view"></EView>>
         <div v-if="!userInfo">
           <q-btn class="q-ma-sm" color="primary" size="12px" to="/signin"
             >Sign in</q-btn
@@ -79,7 +63,7 @@
   </q-layout>
 </template>
 <script setup lang="ts">
-import { TabType, IView } from "../utils/types";
+import { TabType, View } from "../utils/types";
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { EAuth } from '@edifiles/services';
 import EView from "./EView.vue";
@@ -89,12 +73,8 @@ const auth = new EAuth()
 const drawerOpen = ref(false);
 let userInfo = auth.getUser();
 const props = defineProps({
-  navType: {
-    type: String as () => TabType,
-    required: true
-  },
   view: {
-    type: Object as () => IView,
+    type: Object as () => View,
     required: true
   },
   style: {

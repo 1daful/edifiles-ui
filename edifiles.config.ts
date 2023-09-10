@@ -30,7 +30,6 @@ const repo = new Repository()
 const recom = new Recommender()
 const auth = new EAuth()
 
-
 const search: View = new View({
     id: 'search',
     layout: 'Grid',
@@ -40,6 +39,7 @@ const search: View = new View({
         content: Search
     }]
 })
+
 
 export const userSignUp =  new QuestionType({
     title: 'Sign Up',
@@ -103,10 +103,21 @@ export const userView: View = new View({
 
 const signIn: Action = new Action({
     label: 'Sign In',
-    event: () => useRouter().push('/signin'),
+    event: 'route',
+    args: '/signin',
+    onResult: [],
+    onError: [],
+    style: {
+        type: 'outline'
+    }
+})
+const signUp = new Action({
+    label: 'Sign Up',
+    event: 'route',
+    args: '/signup',
     onResult: [],
     onError: []
-})
+});
 
 export const userViewResolver = () => {
     const mailer = new Mailer()
@@ -219,7 +230,7 @@ const mainLayout: PageView = new PageView({
     id: '',
     layout: 'Grid',
     sections: [
-        menus, search, m
+        menus, search, signIn, signUp
     ],
     children: [
         home, tools

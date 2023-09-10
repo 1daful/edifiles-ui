@@ -5,7 +5,6 @@ import { useWidgets } from "./src/utils/useWidgets";
 import Search from "../ui/src/components/ESearch.vue";
 import { menus } from "./src/utils/menus";
 import Home from "./src/pages/Home.vue";
-import { useRouter } from 'vue-router';
 const postQuery = `
   query GetPost($postId: ID!) {
     post(id: $postId) {
@@ -89,7 +88,18 @@ export const userView = new View({
 });
 const signIn = new Action({
     label: 'Sign In',
-    event: () => useRouter().push('/signin'),
+    event: 'route',
+    args: '/signin',
+    onResult: [],
+    onError: [],
+    style: {
+        type: 'outline'
+    }
+});
+const signUp = new Action({
+    label: 'Sign Up',
+    event: 'route',
+    args: '/signup',
     onResult: [],
     onError: []
 });
@@ -198,7 +208,7 @@ const mainLayout = new PageView({
     id: '',
     layout: 'Grid',
     sections: [
-        menus, search, m
+        menus, search, signIn, signUp
     ],
     children: [
         home, tools

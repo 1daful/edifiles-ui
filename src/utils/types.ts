@@ -156,7 +156,7 @@ export type ActionState = {
     diasble?: boolean
 }
 
-export type ActionString = 'Submit' | 'Filter'
+export type ActionString = 'Submit' | 'Filter' | 'Route' | 'Modal'
 
 export class Action {
     constructor(action: Action) {
