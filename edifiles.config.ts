@@ -1,14 +1,10 @@
 import { Repository, Recommender, EAuth, Mailer, EmailType } from '@edifiles/services';
-import { Action, FormType, NavLink, NavList, PageView, QuestionType, SectionView, ViewSection } from "./src/utils/types";
+import { Action, FormType, NavLink, NavList, PageView, QuestionType, Client } from "./src/utils/types";
 import { View } from "./src/utils/types";
 import { WidgetName, useWidgets } from "./src/utils/useWidgets";
-import { gql, useQuery } from '@urql/vue';
 import Search from "../ui/src/components/ESearch.vue";
 import { menus } from "./src/utils/menus";
-import { watch } from 'vue';
-import { onMounted } from 'vue';
 import Home from "./src/pages/Home.vue";
-import { useRouter } from 'vue-router';
 
 const postQuery = `
   query GetPost($postId: ID!) {
@@ -39,7 +35,6 @@ const search: View = new View({
         content: Search
     }]
 })
-
 
 export const userSignUp =  new QuestionType({
     title: 'Sign Up',
@@ -111,6 +106,7 @@ const signIn: Action = new Action({
         type: 'outline'
     }
 })
+
 const signUp = new Action({
     label: 'Sign Up',
     event: 'route',
@@ -153,6 +149,7 @@ export const viewResolver = {
         ]
     }
 }
+
 const home: PageView = new PageView({
     id: 'home',
     layout: 'Grid',
@@ -240,19 +237,18 @@ export const GlobalView = {
     mainLayout
 }
 
-export const setGlobal = () => {
+/*export const setGlobal = () => {
     Object.keys(GlobalView).forEach((key) => {
         const widgetKey = key as WidgetName;
         useWidgets().get(widgetKey).insert(...GlobalView[widgetKey])
       });
-}
+}*/
 
 export  const view = new PageView({
     id: '',
     layout: 'Grid',
     sections: []
 })
-
 
 export const globalViewResolver = {
     main: async (params: any) => ({

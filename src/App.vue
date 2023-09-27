@@ -6,13 +6,9 @@
 import { useQuasar } from "quasar";
 import { onMounted, provide, ref } from "vue";
 import { useRoute } from "vue-router";
-import { Client, cacheExchange,fetchExchange, provideClient } from '@urql/vue';
+import { GraphqlClient } from "@edifiles/services";
 
-const client = new Client({
-  url: 'http://your-graphql-api-endpoint', // Replace with your actual GraphQL endpoint.
-  exchanges: [cacheExchange, fetchExchange],
-});
-provideClient(client)
+const newClient = new GraphqlClient('twitter.com')
 
 const $q = useQuasar();
 const r = useRoute();

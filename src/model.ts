@@ -1,4 +1,7 @@
-import { DataType } from './../utils/types';
+import { DataType } from './utils/types';
+import { Repository } from "@edifiles/services";
+import { header } from './utils/DataView';
+
 export const projectOptions = [
     'website',
     'app',
@@ -30,10 +33,6 @@ export const brandingOptions = [
 
 export const domainNames = []
 
-export function getProjects() {
-
-}
-
 export let mediaItems: [{
     index: string,
     items: DataType[]
@@ -44,3 +43,12 @@ export let mediaItems: [{
       items: []
   }
 ]
+
+class Goal{
+    @header() title: string = ''
+}
+//const db: SDKClient = new SDKClient(Repository, '')
+
+const db = new Repository()
+
+export const services = await db.readItems('service')

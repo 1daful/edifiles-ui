@@ -496,3 +496,23 @@ export const Layout = {
         size: 'col-8'
     })
 }
+
+export type Argument = {
+    name: string,
+    value: string
+}
+
+export type Selection = {
+    arguments?: Argument[],
+    name: string,
+    selections?: Selection[]
+}
+
+export interface IDataType{
+    new(data: any): DataType
+}
+
+export type Client = {
+    name: string,
+    auth: any
+}

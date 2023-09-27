@@ -67,6 +67,14 @@ export function Router() {
                     component: () => import('../pages/ErrorNotFound.vue'),
                 },
                 {
+                    path: '/',
+                    name: 'Home',
+                    component: () => import('../pages/Page.vue'),
+                    meta: {
+                      nav: true
+                    }
+                },
+                {
                     path: '/:type',
                     component: () => import('../pages/Page.vue'),
                 },

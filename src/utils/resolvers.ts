@@ -4,14 +4,24 @@ const postsData: Post[] = [
     id: '1',
     title: 'First Post',
     content: 'This is the content of the first post.',
-    author: {},
+    author: {
+      id: "",
+      name: "",
+      email: "",
+      posts: []
+    },
     createdAt: '2023-08-01T12:00:00Z',
   },
   {
     id: '2',
     title: 'Second Post',
     content: 'This is the content of the second post.',
-    author: '2',
+    author: {
+      id: "",
+      name: "",
+      email: "",
+      posts: []
+    },
     createdAt: '2023-08-02T09:30:00Z',
   },
 ];
@@ -42,7 +52,7 @@ const resolvers = {
   },
   User: {
     posts: (user: User) => {
-      return postsData.filter((post) => post.author === user.id);
+      return postsData.filter((post) => post.author.id === user.id);
     },
   },
 };

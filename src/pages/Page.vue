@@ -139,11 +139,13 @@ onBeforeMount(async () => {
     categories = useRoute().params.categories as string[]
     if(type) {
         view = GlobalView.mainLayout.children.find((child) => {
+            console.log('Type: ', type)
             return child.id === type
         })
     }
     else {
         view = GlobalView.mainLayout.children.find((child) => {
+            console.log('Home Type: ', type)
             return child.id === 'home'
         })
     }

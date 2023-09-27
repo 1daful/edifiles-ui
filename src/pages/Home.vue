@@ -16,11 +16,13 @@
     :query="query"
     :data="filterData">
   </EView>
+  <ENav navType="top" :menuList="tabs"></ENav>
 </template>
 
 <script setup lang="ts">
 import { nextTick, onBeforeMount, shallowRef } from "vue";
 import EView from "../components/EView.vue";
+import ENav from "../components/ENav.vue";
 import { DataType, Filters, View, NavList } from "../utils/types";
 import { Utility } from '@edifiles/services';
 import Buton from "../components/Buton.vue";
@@ -155,12 +157,25 @@ const headerView = new View({
 
 const view2 = view
 
+const tabs: NavList = {
+  id: "",
+  content: [{
+    path: 'services',
+    name: 'Services'
+  },{
+    path: 'services',
+    name: 'Services'
+  }
+  ],
+  navType: "top"
+}
+
 //let SBL = viewa.get('Header')
 
 //navList: this.$route.matched[0].children,
 onBeforeMount(() => {
   //nextTick(() => {});
   //viewa.insert("Header", view2);
-  //console.log('SBL', SBL?.sections[0])
+  console.log('SBL')
 });
 </script>
