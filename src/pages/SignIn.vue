@@ -90,11 +90,11 @@ import { defineComponent, ref } from "vue";
 import { EAuth } from "@edifiles/services";
 //import { FirebaseAuth } from "../api/auth/FirebaseAuth";
 import { Axiosi } from "@edifiles/services";
-import config from "../../public/config.json";
+import { config } from "../../public/config";
 //import Userfront, {SignupForm} from "@userfront/vue"
 
 let client = new Axiosi();
-const auth = new EAuth()
+const auth = new EAuth(config.api.Supabase)
 
 let socials = config.socials;
 //let auth = new FirebaseAuth()

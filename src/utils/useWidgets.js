@@ -3,9 +3,14 @@ import { defineStore } from 'pinia';
 export class Widget extends View {
     constructor(name, view) {
         super(view);
+        Object.defineProperty(this, "name", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
         this.name = name;
     }
-    name;
 }
 export const useWidgets = defineStore({
     id: 'refState',

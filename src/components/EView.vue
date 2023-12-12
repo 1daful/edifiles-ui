@@ -3,7 +3,11 @@
     <!--template :key="view.id" class="col-md" v-if="view.layout === 'Grid'"-->
       <h4 v-if="view.heading">{{ view.heading }}</h4>
       <template v-for="section in view.sections">
+      <QList :bordered="menu.listStyle?.bordered"
+        :dense="menu.listStyle?.dense"
+        :dark="menu.listStyle?.dark">
         <ENav v-if="isType(section, NavList)" :menuList="section" :navType="section.navType"></ENav>
+      </QList>
         <Component v-if="isVComponent(section)"
           :is="section.content"
           v-bind="{...section.props, ...$attrs }" :key="section.content.name">
@@ -45,7 +49,11 @@
 <script lang="ts">
 import EDataView from "./EDataView.vue";
 import ENav from "./ENav.vue";
-import { Layout, View, TabView, SectionView, PageView, isVComponent, isDataType, isQuestionType, isView,isComponent, isNavList, isType, NavLink, FormType, VComponent, ViewSection, SecTionType, NavList, IView, DataType, Action } from "../utils/types";
+import { Layout, View, TabView, SectionView, PageView, isVComponent, isDataType, 
+  isQuestionType, isView,isComponent, isNavList, isType, NavLink, 
+  FormType, VComponent, ViewSection, SecTionType, 
+  NavList, IView, DataType, Action } from "../utils/types";
+import { Menu } from "../utils/DataTypes";
 import ETabView from "./ETabView.vue";
 import EAction from "./EAction.vue";
 import { Component, defineComponent } from "vue";
@@ -66,6 +74,8 @@ let widgets = Layout
 let navViews: View[] = []
 
 const menuList: NavList[] = []
+
+const menu = new Menu()
 
 const views: IView[] = []
 
@@ -98,6 +108,7 @@ export default defineComponent({
       review,
       widgets,
       navViews,
+      menu
       /*menuList,
       views,
       dataList,

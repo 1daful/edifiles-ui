@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { View, isType, NavList, PageView } from '../utils/types';
-import { viewResolver, GlobalView } from "../../edifiles.config";
+import { GlobalView } from "../../config/edifiles.config";
 import { useRoute } from "vue-router";
 import EView from "../components/EView.vue";
 import { onBeforeMount, ref } from 'vue';
@@ -96,7 +96,7 @@ const view2 = new PageView({
 })
 
 let id: string | number
-let type: string
+//let type: string[]
 let categories: string[]
 
 /*const processMenus = (view: View) => {
@@ -135,17 +135,17 @@ const processMenus = () => {
     });
 }
 onBeforeMount(async () => {
-    type = useRoute().params.type as string
+    //type = useRoute().params.type as string
     categories = useRoute().params.categories as string[]
-    if(type) {
+    if(categories) {
         view = GlobalView.mainLayout.children.find((child) => {
-            console.log('Type: ', type)
-            return child.id === type
+            console.log('Categories: ', categories)
+            return child.id === categories[categories.length-1]
         })
     }
     else {
         view = GlobalView.mainLayout.children.find((child) => {
-            console.log('Home Type: ', type)
+            console.log('Home category: ', categories)
             return child.id === 'home'
         })
     }

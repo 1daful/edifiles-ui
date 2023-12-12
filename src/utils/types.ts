@@ -1,4 +1,5 @@
 import { Component } from "vue"
+import { CarouselStyle, HorizontalPosition, VerticalPosition } from "./DataTypes";
 
 export function isType<T>(obj: any, classType: new (...args: any[]) => T): obj is T {
     return obj instanceof classType;
@@ -105,18 +106,35 @@ export type LayoutType = 'Grid' | 'Relative' | 'Vertical' | 'Horizontal'
 
 export type DataContent = {
     icon?: string;
-    img?: string;
-    label: string;
+    thumbnail?: string;
+    avatar?: string;
+    label?: string;
     action?: Action
     horizontal?: boolean
     class?: string
+    position?: VerticalPosition | HorizontalPosition
 }
 
 export type DataItem = {
-    content: DataContent[]
+    header: {
+        content: DataContent[]
+    },
+    center: {
+        content: DataContent[]
+    },
+    footer: {
+        content: DataContent[]
+    },
+    left: {
+        content: DataContent[]
+    },
+    right: {
+        content: DataContent[]
+    }
 }
 
 export type CardStyle = {
+    styles: Object
     bordered: boolean
     flat?: boolean
     squared?: boolean
@@ -125,28 +143,33 @@ export type CardStyle = {
 }
 
 export class DataType {
-    constructor(data: DataType) {}
+    constructor(data: DataType) {
+        Object.assign(this, data)
+    }
     id?: any;
     overlay?: string;
-    items!: DataItem[]
+    item!: DataItem
     setHeader?: boolean;
-    cardStyle?: CardStyle
+    style?: CardStyle | CarouselStyle
     class?: string
     actions?: Action[]
-    noCard?: boolean = false
+    card?: boolean = true
 }
 
 export type ActionStyle = {
     type?: 'flat' | 'glossy' | 'push' | 'outline' | 'unelevated'
     shape?: 'round' | 'rounded' | 'square'
-    dense?: boolean
+    dense?: boolean,
+    size?: string, 
     ripple?: boolean
     fab?: 'fab' | 'fab-mini'
     stack?: boolean
     stretch?: boolean
     align?: 'center' | 'right' | 'left' | 'around' | 'between' | 'evenly'
     noWrap?: boolean
-    noCaps?: boolean
+    noCaps?: boolean,
+    color?: string,
+    ariaLabel?: string
 }
 
 export type ActionState = {
@@ -164,7 +187,7 @@ export class Action {
     }
     name?: string
     type?: string
-    label!: string
+    label?: string
     icon?: string
     iconRight?: string
     args?: any
@@ -357,7 +380,7 @@ export interface IView {
     class?: string
 }
 
-export type ViewSection = View | DataType |QuestionType | VComponent | Component | NavList
+export type ViewSection = View | DataType | QuestionType | VComponent | Component | NavList
 
 function insert(view: IView, ...content: ViewSection[]) {
     view.sections?.push(...content)

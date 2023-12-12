@@ -20,7 +20,7 @@
 import { useQuasar } from "quasar";
 import { onBeforeMount, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { config, GlobalView } from "../../edifiles.config";
+import { GlobalView } from "../../config/edifiles.config";
 import config2 from "../../public/config.json";
 import EView from "../components/EView.vue";
 import ELayout from "../components/ELayout.vue";

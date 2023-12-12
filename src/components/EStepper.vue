@@ -69,9 +69,10 @@
 import { ref } from "vue";
 import { Repository } from "@edifiles/services";
 import { FormType } from "../utils/types";
+import { config } from "../../public/config";
 
 import { defineComponent } from "vue";
-const repository = new Repository();
+const repository = new Repository(config.api.Supabase);
 
 export default defineComponent({
   data() {

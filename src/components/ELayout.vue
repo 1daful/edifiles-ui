@@ -13,9 +13,9 @@
       :class="{ 'fixed-nav': heroStyle?.fixedNav }"
       :style="{ backgroundColor: `${headerColor}` }"
     >
-      <q-toolbar class="text-h5 text-weight-bolder justify-between">
+      <q-toolbar class="text-h5 text-weight-bolder justify-end">
         <q-item-label v-if="brand" class="logo"> {{ brand }}</q-item-label>
-        <EView :view="view"></EView>>
+        <EView :view="view"></EView>
         <slot name="nav"></slot>
         <q-btn
           size="20px"
@@ -37,6 +37,7 @@
       <q-btn label="{{ hero.buttonText }}" v-if="hero.buttonText"></q-btn>
     </div>
     <q-drawer
+      
       style="z-index: 999"
       v-model="drawerOpen"
       side="left"
@@ -67,9 +68,9 @@ import { TabType, View } from "../utils/types";
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { EAuth } from '@edifiles/services';
 import EView from "./EView.vue";
-import { useRoute } from "vue-router";
+import { config } from "../../public/config";
 
-const auth = new EAuth()
+const auth = new EAuth(config.api.Supabase)
 const drawerOpen = ref(false);
 let userInfo = auth.getUser();
 const props = defineProps({

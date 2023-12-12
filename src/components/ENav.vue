@@ -1,43 +1,47 @@
 <template>
   <template v-if="navType ==='left' || navType ==='right'">
-    <QItem v-for="data in menuList.content" :key="data.path" :dark="style?.dark" :dense="style?.dense">
-      <QItemSection v-if="data.icon">
-        <QAvatar :icon="data.icon"></QAvatar>
-      </QItemSection>
-      <QItemSection class="">
-        <RouterLink
-          class="text-h6 textweight-bolder"
-          :to="{
-            path: data.path,
-          }"
-        >
-          {{ data.name }}
-        </RouterLink>
-      </QItemSection>
-    </QItem>
+      <QItem v-for="data in menuList.content" :key="data.path"
+      :dark="style?.dark" :dense="style?.dense" class="header-link">
+        <QItemSection v-if="data.icon">
+          <QAvatar :icon="data.icon"></QAvatar>
+        </QItemSection>
+        <QItemSection class="">
+          <RouterLink
+            class="text-h6 textweight-bolder"
+            :to="{
+              path: data.path,
+            }"
+          >
+          <QBtn flat>
+            {{ data.name }}
+          </QBtn>
+          </RouterLink>
+        </QItemSection>
+      </QItem>
   </template>
 
   <template v-else>
     <template v-for="data in menuList.content" :key="data.path">
-      <QAvatar :icon="data.icon" v-if="data.icon"></QAvatar>
+      <!--QAvatar :icon="data.icon" v-if="data.icon"></QAvatar-->
       <RouterLink
-        class="q-ma-sm"
+        class="q-ma-sm header-link gt-sm"
         :to="{
           path: data.path,
-        }"
-      >
-        {{ data.name }}
+        }">
+          <QBtn flat :icon="data.icon">
+            {{ data.name }}
+          </QBtn>
       </RouterLink>
     </template>
   </template>
 </template>
 <script setup lang="ts">
 import { TabType, NavList } from "../utils/types";
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { ref } from "vue";
 import { EAuth } from '@edifiles/services';
-import { useRoute } from "vue-router";
+import { config } from "../../public/config";
 
-const auth = new EAuth()
+const auth = new EAuth(config.api.Supabase)
 const drawerOpen = ref(false);
 let userInfo = auth.getUser();
 const props = defineProps({
@@ -60,7 +64,7 @@ a {
   text-decoration-line: none;
 }
 
-.header-link a {
+.header-link{
   color: black;
   /*font-weight: bold;*/
 }

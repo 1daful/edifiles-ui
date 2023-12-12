@@ -1,26 +1,70 @@
 export class Api {
-    resource = {
-        request: {
-            url: ""
-        },
-        response(data) {
-            return {};
-        }
-    };
+    constructor() {
+        Object.defineProperty(this, "resource", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: {
+                request: {
+                    url: ""
+                },
+                response(data) {
+                    return {};
+                }
+            }
+        });
+    }
 }
 class gooBoks {
-    baseUrl = '';
-    data;
-    volumeRes = new Resource(this, "", {}, (data) => ({
-        title: data.title
-    }));
+    constructor() {
+        Object.defineProperty(this, "baseUrl", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: ''
+        });
+        Object.defineProperty(this, "data", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "volumeRes", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: new Resource(this, "", {}, (data) => ({
+                title: data.title
+            }))
+        });
+    }
 }
 class Resource {
-    api;
-    type;
-    request;
-    response;
     constructor(api, type, request, response) {
+        Object.defineProperty(this, "api", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "type", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "request", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "response", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
         this.api = api;
         this.type = type;
         this.request = request;
@@ -85,9 +129,14 @@ class Resource {
 }
 class Response {
     constructor(props = {}) {
+        Object.defineProperty(this, "data", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: {}
+        });
         Object.assign(this, props);
     }
-    data = {};
 }
 class Axios {
     get() {
@@ -95,12 +144,32 @@ class Axios {
 }
 export class Request {
     constructor(name, url, params) {
+        Object.defineProperty(this, "name", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "baseUrl", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "params", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
+        Object.defineProperty(this, "data", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+        });
         this.name = name;
         this.baseUrl = url;
         this.params = params;
     }
-    name;
-    baseUrl;
-    params;
-    data;
 }

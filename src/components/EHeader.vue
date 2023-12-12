@@ -1,21 +1,34 @@
 <template>
-  <div class="row jstify-start" v-if="view.navType === 'left' || view.navType === 'right'">
+  <div class="row jstify-start"
+  v-if="view.navType === 'left' || view.navType === 'right'">
     <div class="col-3 header-link" v-show="view">
-      <QList :bordered="style?.border" :dense="style?.dense" :dark="style?.dark">
+      <QList :bordered="listStyle?.bordered"
+      :dense="listStyle?.dense"
+      :dark="listStyle?.dark">
         <EView :view="view"></EView>
-        <slot name="nav"></slot>
       </QList>
     </div>
   </div>
 
-  <q-layout class="hero-header col" :style="heroStyle" style="min-height: 50px" v-else view="'lHh Lpr lFf'">
+  <q-layout class="hero-header col" :style="heroStyle" 
+  style="min-height: 50px"
+  view="'lHh Lpr lFf'" v-else>
     <q-header
-      :class="{ 'fixed-nav': heroStyle?.fixedNav }"
+      :class="headerStyle?.class"
       :style="{ backgroundColor: `${headerColor}` }"
+      :reveal="headerStyle?.reveal"
+      :bordered="headerStyle?.bordered"
+      :elevated="headerStyle?.elevated"
     >
       <q-toolbar class="text-h5 text-weight-bolder justify-between">
-        <q-item-label v-if="brand" class="logo"> {{ brand }}</q-item-label>
-        <EView :view="view"></EView>>
+        <a :href="brand.baseUrl" v-if="brand">
+        <img class="ml-2" height="30" alt="Company logo" src="/logo.png" />
+        <q-item class="self-center" color="primary">
+          {{ brand.title }}
+        </q-item>
+      </a>
+        <q-item-label v-if="brand" class="logo"> {{ brand.name }}</q-item-label>
+        <EView :view="view"></EView>
         <slot name="nav"></slot>
         <q-btn
           size="20px"
@@ -46,11 +59,7 @@
       :breakpoint="500"
     >
       <q-list padding>
-        <q-btn
-          icon="close"
-          @click="drawerOpen = !drawerOpen"
-          color="red"
-        ></q-btn>
+        <EAction :action="menuAction"></EAction>
         <EView :view="view"></EView>>
         <div v-if="!userInfo">
           <q-btn class="q-ma-sm" color="primary" size="12px" to="/signin"
@@ -63,31 +72,57 @@
   </q-layout>
 </template>
 <script setup lang="ts">
-import { TabType, View } from "../utils/types";
-import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { TabType, View, Action } from "../utils/types";
+import { computed, ref } from "vue";
 import { EAuth } from '@edifiles/services';
 import EView from "./EView.vue";
-import { useRoute } from "vue-router";
+import EAction from "./EAction.vue";
+import { HeaderStyle, ListStyle } from "../utils/DataTypes";
 
 const auth = new EAuth()
-const drawerOpen = ref(false);
+let drawerOpen = false;
 let userInfo = auth.getUser();
 const props = defineProps({
   view: {
     type: Object as () => View,
     required: true
   },
-  style: {
-    type: Object
-  },
+  headerStyle: {
+    type: Object as () => HeaderStyle,
+    default: {
+      reveal: true,
+      bordered: false,
+      elevated: true,
+      class: "fixed-nav"
+    }
+  },  
   heroStyle: {
     type: Object,
   },
+  listStyle: {
+    type: Object as ()=> ListStyle
+  },
   brand: {
-    type: String,
+    type: Object,
   },
   hero: {
     type: Object,
+  },
+  menuAction: {
+    type: Object as () => Action,
+    default: {
+      name: "menuBtn",
+      icon: 'close',
+      event: ()=> {drawerOpen = !drawerOpen},
+      style: {
+        size: "20px",
+        color: "red",
+        type: "flat",
+        shape: "round",
+        dense: true,
+        class: "lt-md"
+      }
+    }
   }
 });
 

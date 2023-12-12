@@ -7,8 +7,9 @@ import { useQuasar } from "quasar";
 import { onMounted, provide, ref } from "vue";
 import { useRoute } from "vue-router";
 import { GraphqlClient } from "@edifiles/services";
+import { config } from "../public/config";
 
-const newClient = new GraphqlClient('twitter.com')
+const newClient = new GraphqlClient(config)
 
 const $q = useQuasar();
 const r = useRoute();

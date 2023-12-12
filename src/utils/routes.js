@@ -71,11 +71,11 @@ export function Router() {
                     name: 'Home',
                     component: () => import('../pages/Page.vue'),
                     meta: {
-                      nav: true
+                        nav: true
                     }
                 },
                 {
-                    path: '/:type',
+                    path: '/:categories',
                     component: () => import('../pages/Page.vue'),
                 },
             ],
@@ -92,7 +92,7 @@ export function Router() {
             component: () => import('../pages/SERP.vue'),
             children: [
                 {
-                    path: '/:type',
+                    path: '/:categories',
                     name: 'SERPView',
                     component: () => import('../pages/SERPView.vue'),
                     props: true

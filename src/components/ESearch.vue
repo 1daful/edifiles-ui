@@ -56,7 +56,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Search } from "@edifiles/services";
-import { mediaItems } from "./../model";
+import { mediaItems } from "../../config/model";
 
 export default defineComponent({
   data() {

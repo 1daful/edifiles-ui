@@ -4,16 +4,16 @@
             <template v-for="dataContent in dataItem.content">
                 <div class="col-lg">
                     <QAvatar :icon="dataContent.icon" v-if="dataContent.icon"></QAvatar>
-                    <QAvatar :icon="dataContent.icon" v-if="dataContent.img">
-                    <QImg :src="dataContent.img"></QImg>
+                    <QAvatar v-if="dataContent.avatar">
+                        <QImg :src="dataContent.avatar"></QImg>
                     </QAvatar>
+                    <QImg :src="dataContent.thumbnail" v-if="dataContent.thumbnail"></QImg>
                 </div>
                 <div class="col-lg">
-                    <QItemLabel> {{ dataContent.label }} </QItemLabel>
+                    <QItemLabel v-if="dataContent.label"> {{ dataContent.label }} </QItemLabel>
                 </div>
                 <div class="col-lg">
-                    <EAction :action="dataContent.action" v-if="dataContent.action">
-                    </EAction>
+                    <EAction :action="dataContent.action" v-if="dataContent.action"></EAction>
                 </div>
             </template>
         </div>

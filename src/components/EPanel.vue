@@ -1,7 +1,7 @@
 <template>
   <QCard>
     <QImg v-if="data.overlay" :src="data.overlay" style="max-width: 30em; max-height: 50em">
-      <AwList :data="data"></AwList>
+      <EList :data="data"></EList>
     </QImg>
     <template v-else>
       <QCardSection>
@@ -21,14 +21,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { DataType } from "../utils/types";
-import AwList from "../components/EList.vue";
+import EList from "../components/EList.vue";
 import EAction from "../components/EAction.vue";
 import EDataItem from "../components/EDataItem.vue";
 
 export default defineComponent({
   name: "AwPanel",
   components: {
-    AwList,
+    EList,
     EAction,
     EDataItem
   },

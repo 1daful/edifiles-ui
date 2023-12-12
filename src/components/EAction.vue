@@ -1,5 +1,10 @@
 <template>
-  <QBtn :label="action.label" @click="event()" :[type]="true" :[shape]="action.style" dense :icon="action.icon" class="q-mr-sm" v-if="action" color="primary"></QBtn>
+  <QBtn :label="action.label" @click="event()" :[type]="true" :[shape]="true" 
+  dense :icon="action.icon" 
+  :size="action.style?.size" 
+  class="q-mr-sm" v-if="action" 
+  color="primary"
+  :aria-label="action.style?.ariaLabel"></QBtn>
   <QBtn :label="actionName" class="lt-md" v-else>
     <QPopupProxy cover>
       <component :is="component" v-if="component" v-bind="$attrs"></component>
@@ -75,7 +80,5 @@ onMounted(() => {
         break;
     }
   }
-  const g = document.getElementById("g");
-  //console.log('dom', gh.value.
 });
 </script>
